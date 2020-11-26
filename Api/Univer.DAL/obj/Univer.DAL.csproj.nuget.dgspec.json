@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\WEB\\Projects\\Univer\\Univer.Api\\Univer.DAL\\Univer.DAL.csproj": {}
+    "D:\\WEB\\Projects\\Univer\\Api\\Univer.DAL\\Univer.DAL.csproj": {}
   },
   "projects": {
-    "D:\\WEB\\Projects\\Univer\\Univer.Api\\Univer.DAL\\Univer.DAL.csproj": {
+    "D:\\WEB\\Projects\\Univer\\Api\\Univer.DAL\\Univer.DAL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\WEB\\Projects\\Univer\\Univer.Api\\Univer.DAL\\Univer.DAL.csproj",
+        "projectUniqueName": "D:\\WEB\\Projects\\Univer\\Api\\Univer.DAL\\Univer.DAL.csproj",
         "projectName": "Univer.DAL",
-        "projectPath": "D:\\WEB\\Projects\\Univer\\Univer.Api\\Univer.DAL\\Univer.DAL.csproj",
+        "projectPath": "D:\\WEB\\Projects\\Univer\\Api\\Univer.DAL\\Univer.DAL.csproj",
         "packagesPath": "C:\\Users\\yurbe\\.nuget\\packages\\",
-        "outputPath": "D:\\WEB\\Projects\\Univer\\Univer.Api\\Univer.DAL\\obj\\",
+        "outputPath": "D:\\WEB\\Projects\\Univer\\Api\\Univer.DAL\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\yurbe\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -37,6 +37,28 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[5.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[5.0.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

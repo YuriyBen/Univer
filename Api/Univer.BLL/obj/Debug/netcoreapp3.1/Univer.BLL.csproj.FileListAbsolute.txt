@@ -1,0 +1,9 @@
+D:\WEB\Projects\Univer\Api\Univer.BLL\bin\Debug\netcoreapp3.1\Univer.BLL.deps.json
+D:\WEB\Projects\Univer\Api\Univer.BLL\bin\Debug\netcoreapp3.1\Univer.BLL.dll
+D:\WEB\Projects\Univer\Api\Univer.BLL\bin\Debug\netcoreapp3.1\Univer.BLL.pdb
+D:\WEB\Projects\Univer\Api\Univer.BLL\obj\Debug\netcoreapp3.1\Univer.BLL.AssemblyInfoInputs.cache
+D:\WEB\Projects\Univer\Api\Univer.BLL\obj\Debug\netcoreapp3.1\Univer.BLL.AssemblyInfo.cs
+D:\WEB\Projects\Univer\Api\Univer.BLL\obj\Debug\netcoreapp3.1\Univer.BLL.csproj.CoreCompileInputs.cache
+D:\WEB\Projects\Univer\Api\Univer.BLL\obj\Debug\netcoreapp3.1\Univer.BLL.dll
+D:\WEB\Projects\Univer\Api\Univer.BLL\obj\Debug\netcoreapp3.1\Univer.BLL.pdb
+D:\WEB\Projects\Univer\Api\Univer.BLL\obj\Debug\netcoreapp3.1\Univer.BLL.csprojAssemblyReference.cache
