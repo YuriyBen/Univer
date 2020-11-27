@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Univer.BLL.Services;
 using Univer.DAL;
 
 namespace Univer.Api
@@ -34,6 +35,8 @@ namespace Univer.Api
                     this.Configuration["ConnectionStrings:DefaultConnection"])
                     //b => b.MigrationsAssembly("PizzeriaBackend"))
             );
+
+            services.AddScoped<IUserService, UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

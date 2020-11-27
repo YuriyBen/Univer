@@ -1,6 +1,5 @@
 D:\WEB\Projects\Univer\Api\Univer.DAL\bin\Debug\netcoreapp3.1\Univer.DAL.deps.json
 D:\WEB\Projects\Univer\Api\Univer.DAL\bin\Debug\netcoreapp3.1\Univer.DAL.dll
-D:\WEB\Projects\Univer\Api\Univer.DAL\obj\Debug\netcoreapp3.1\Univer.DAL.csprojAssemblyReference.cache
 D:\WEB\Projects\Univer\Api\Univer.DAL\obj\Debug\netcoreapp3.1\Univer.DAL.AssemblyInfoInputs.cache
 D:\WEB\Projects\Univer\Api\Univer.DAL\obj\Debug\netcoreapp3.1\Univer.DAL.AssemblyInfo.cs
 D:\WEB\Projects\Univer\Api\Univer.DAL\bin\Debug\netcoreapp3.1\Univer.DAL.pdb
@@ -10,3 +9,4 @@ D:\WEB\Projects\Univer\Api\Univer.DAL\bin\Debug\netcoreapp3.1\Univer.DAL.runtime
 D:\WEB\Projects\Univer\Api\Univer.DAL\bin\Debug\netcoreapp3.1\Univer.DAL.runtimeconfig.dev.json
 D:\WEB\Projects\Univer\Api\Univer.DAL\obj\Debug\netcoreapp3.1\Univer.DAL.genruntimeconfig.cache
 D:\WEB\Projects\Univer\Api\Univer.DAL\obj\Debug\netcoreapp3.1\Univer.DAL.csproj.CoreCompileInputs.cache
+D:\WEB\Projects\Univer\Api\Univer.DAL\obj\Debug\netcoreapp3.1\Univer.DAL.csprojAssemblyReference.cache

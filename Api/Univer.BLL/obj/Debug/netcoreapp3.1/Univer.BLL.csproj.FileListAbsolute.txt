@@ -7,3 +7,6 @@ D:\WEB\Projects\Univer\Api\Univer.BLL\obj\Debug\netcoreapp3.1\Univer.BLL.csproj.
 D:\WEB\Projects\Univer\Api\Univer.BLL\obj\Debug\netcoreapp3.1\Univer.BLL.dll
 D:\WEB\Projects\Univer\Api\Univer.BLL\obj\Debug\netcoreapp3.1\Univer.BLL.pdb
 D:\WEB\Projects\Univer\Api\Univer.BLL\obj\Debug\netcoreapp3.1\Univer.BLL.csprojAssemblyReference.cache
+D:\WEB\Projects\Univer\Api\Univer.BLL\bin\Debug\netcoreapp3.1\Univer.DAL.dll
+D:\WEB\Projects\Univer\Api\Univer.BLL\bin\Debug\netcoreapp3.1\Univer.DAL.pdb
+D:\WEB\Projects\Univer\Api\Univer.BLL\obj\Debug\netcoreapp3.1\Univer.BLL.csproj.CopyComplete

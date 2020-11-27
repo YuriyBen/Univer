@@ -1512,6 +1512,9 @@
       "Univer.BLL/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v3.1",
+        "dependencies": {
+          "Univer.DAL": "1.0.0"
+        },
         "compile": {
           "bin/placeholder/Univer.BLL.dll": {}
         },

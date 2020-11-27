@@ -104,7 +104,11 @@
         },
         "frameworks": {
           "netcoreapp3.1": {
-            "projectReferences": {}
+            "projectReferences": {
+              "D:\\WEB\\Projects\\Univer\\Api\\Univer.DAL\\Univer.DAL.csproj": {
+                "projectPath": "D:\\WEB\\Projects\\Univer\\Api\\Univer.DAL\\Univer.DAL.csproj"
+              }
+            }
           }
         },
         "warningProperties": {

@@ -1387,6 +1387,9 @@
         }
       },
       "Univer.BLL/1.0.0": {
+        "dependencies": {
+          "Univer.DAL": "1.0.0"
+        },
         "runtime": {
           "Univer.BLL.dll": {}
         },
