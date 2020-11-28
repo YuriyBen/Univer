@@ -7,5 +7,6 @@ namespace Univer.DAL.Models
     public static class ErrorMessages
     {
         public const string InvalidLoginOrPassword = "Invalid email or password";
+        public const string UserAlreayExists = "User with same email already exists";
     }
 }

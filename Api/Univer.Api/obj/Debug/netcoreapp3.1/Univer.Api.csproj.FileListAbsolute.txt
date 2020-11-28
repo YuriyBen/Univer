@@ -65,3 +65,4 @@ D:\WEB\Projects\Univer\Api\Univer.Api\bin\Debug\netcoreapp3.1\runtimes\win\lib\n
 D:\WEB\Projects\Univer\Api\Univer.Api\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
 D:\WEB\Projects\Univer\Api\Univer.Api\obj\Debug\netcoreapp3.1\Univer.Api.csproj.CoreCompileInputs.cache
 D:\WEB\Projects\Univer\Api\Univer.Api\obj\Debug\netcoreapp3.1\Univer.Api.MvcApplicationPartsAssemblyInfo.cache
+D:\WEB\Projects\Univer\Api\Univer.Api\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll

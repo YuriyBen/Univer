@@ -10,11 +10,11 @@ namespace Univer.DAL.Models
         public T Data { get; set; }
     }
 
-    //public class SimpleResponse<T>
-    //{
-    //    public string Message { get; set; }
+    public class LoginResponse
+    {
+        public string AccessToken { get; set; }
 
-    //    public T Result { get; set; }
-    //}
+        public UserDTO User { get; set; }
+    }
 
 }

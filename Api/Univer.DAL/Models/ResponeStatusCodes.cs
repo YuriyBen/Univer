@@ -8,7 +8,8 @@ namespace Univer.DAL.Models
     {
         Ok = 0,
         BadRequest = 1,
-        InvalidLoginOrPassword = 2
+        InvalidLoginOrPassword = 2,
+        UserAlreayExists = 3,
     }
 }
 
