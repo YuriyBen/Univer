@@ -15,6 +15,8 @@ namespace Univer.DAL.Entities
 
 		public virtual Image ProfileImage { get; set; }
 
+		public ICollection<History> History { get; set; }
+
 
 	}
 }

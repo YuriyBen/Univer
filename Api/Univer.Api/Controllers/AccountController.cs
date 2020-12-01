@@ -39,5 +39,11 @@ namespace Univer.Api.Controllers
             return new JsonResult(result);
         }
 
+        [HttpGet("account/history")]
+        public async Task<ActionResult> GetHistory()
+        {
+            return new JsonResult(32);
+        }
+
     }
 }

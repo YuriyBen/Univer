@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Univer.DAL;
 
 namespace Univer.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201201182544_Add History table")]
+    partial class AddHistorytable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,12 +37,7 @@ namespace Univer.DAL.Migrations
                     b.Property<int>("Result")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("History");
                 });
@@ -94,6 +91,9 @@ namespace Univer.DAL.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
+                    b.Property<int?>("HistoryId")
+                        .HasColumnType("int");
+
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
@@ -105,19 +105,12 @@ namespace Univer.DAL.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("HistoryId");
+
                     b.HasIndex("UserId")
                         .IsUnique();
 
                     b.ToTable("UsersPublicData");
-                });
-
-            modelBuilder.Entity("Univer.DAL.Entities.History", b =>
-                {
-                    b.HasOne("Univer.DAL.Entities.UserPublicData", "User")
-                        .WithMany("History")
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Univer.DAL.Entities.Image", b =>
@@ -133,13 +126,24 @@ namespace Univer.DAL.Migrations
 
             modelBuilder.Entity("Univer.DAL.Entities.UserPublicData", b =>
                 {
+                    b.HasOne("Univer.DAL.Entities.History", "History")
+                        .WithMany("UserDatas")
+                        .HasForeignKey("HistoryId");
+
                     b.HasOne("Univer.DAL.Entities.User", "User")
                         .WithOne("UserPublicData")
                         .HasForeignKey("Univer.DAL.Entities.UserPublicData", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("History");
+
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Univer.DAL.Entities.History", b =>
+                {
+                    b.Navigation("UserDatas");
                 });
 
             modelBuilder.Entity("Univer.DAL.Entities.User", b =>
@@ -149,8 +153,6 @@ namespace Univer.DAL.Migrations
 
             modelBuilder.Entity("Univer.DAL.Entities.UserPublicData", b =>
                 {
-                    b.Navigation("History");
-
                     b.Navigation("ProfileImage");
                 });
 #pragma warning restore 612, 618

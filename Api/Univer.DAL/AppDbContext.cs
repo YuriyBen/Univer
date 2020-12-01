@@ -11,10 +11,16 @@ namespace Univer.DAL
         public DbSet<User> Users { get; set; }
         public DbSet<UserPublicData> UsersPublicData { get; set; }
         public DbSet<Image> Images { get; set; }
+        public DbSet<History> History { get; set; }
 
 
         public AppDbContext(DbContextOptions<AppDbContext> dbContextOptions) : base(options: dbContextOptions) { }
 
-        
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<History>()
+                .HasOne(g => g.User)
+                .WithMany(s => s.History);
+        }
     }
 }

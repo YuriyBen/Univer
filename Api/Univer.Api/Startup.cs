@@ -64,6 +64,7 @@ namespace Univer.Api
             #endregion
 
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IMathService, MathService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
