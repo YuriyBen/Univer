@@ -65,6 +65,7 @@ D:\WEB\Projects\Univer\Api\Univer.Api\bin\Debug\netcoreapp3.1\runtimes\win\lib\n
 D:\WEB\Projects\Univer\Api\Univer.Api\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
 D:\WEB\Projects\Univer\Api\Univer.Api\obj\Debug\netcoreapp3.1\Univer.Api.csproj.CoreCompileInputs.cache
 D:\WEB\Projects\Univer\Api\Univer.Api\obj\Debug\netcoreapp3.1\Univer.Api.MvcApplicationPartsAssemblyInfo.cache
+<<<<<<< HEAD
 D:\WebProj\Univer\Api\Univer.Api\bin\Debug\netcoreapp3.1\appsettings.Development.json
 D:\WebProj\Univer\Api\Univer.Api\bin\Debug\netcoreapp3.1\appsettings.json
 D:\WebProj\Univer\Api\Univer.Api\bin\Debug\netcoreapp3.1\Univer.Api.exe
@@ -132,3 +133,6 @@ D:\WebProj\Univer\Api\Univer.Api\obj\Debug\netcoreapp3.1\Univer.Api.csproj.CopyC
 D:\WebProj\Univer\Api\Univer.Api\obj\Debug\netcoreapp3.1\Univer.Api.dll
 D:\WebProj\Univer\Api\Univer.Api\obj\Debug\netcoreapp3.1\Univer.Api.pdb
 D:\WebProj\Univer\Api\Univer.Api\obj\Debug\netcoreapp3.1\Univer.Api.genruntimeconfig.cache
+=======
+D:\WEB\Projects\Univer\Api\Univer.Api\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+>>>>>>> d04fa10abdbb006b9ecb0764f2bdcc8ea98b22c0

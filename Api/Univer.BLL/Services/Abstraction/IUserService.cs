@@ -8,5 +8,6 @@ namespace Univer.BLL.Services
     public interface IUserService
     {
         Task<object> Register(Register register);
+        Task<object> Login(Login login);
     }
 }

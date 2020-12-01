@@ -26,9 +26,17 @@ namespace Univer.Api.Controllers
         [HttpPost("register")]
         public async Task<ActionResult> Register([FromBody] Register registerRequest)
         {
-            var result = await _userService.Register(registerRequest);
+            var result = await _userService.Register(register: registerRequest);
 
-            return new JsonResult( result );
+            return new JsonResult(result);
+        }
+
+        [HttpPost("login")]
+        public async Task<ActionResult> Login([FromBody] Login loginRequest)
+        {
+
+            var result = await _userService.Login(login: loginRequest);
+            return new JsonResult(result);
         }
 
     }
