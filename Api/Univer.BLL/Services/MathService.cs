@@ -6,12 +6,13 @@ namespace Univer.BLL.Services
 {
     public class MathService : IMathService
     {
-        public int[,] MatrixMultiply(int rows_1, int columns_1, int rows_2, int columns_2)
+        public int MatrixMultiply(int rows_1, int columns_1, int rows_2, int columns_2)
         {
 			Random rand = new Random();
 			
 			var matrix1 = new int[rows_1, columns_1];
 			var matrix2 = new int[rows_2, columns_2];
+			int sum = 0;
 
 			for (var i = 0; i < rows_1; i++)
 			{
@@ -49,7 +50,15 @@ namespace Univer.BLL.Services
 					}
 				}
 			}
-			return matrix3;
+			for (var i = 0; i < rows_1; i++)
+			{
+				for (var j = 0; j < columns_2; j++)
+				{
+					sum += matrix3[i, j];
+				}
+			}
+
+			return sum;
 		}
 
     }
