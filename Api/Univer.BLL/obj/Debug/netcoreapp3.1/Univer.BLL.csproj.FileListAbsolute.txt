@@ -10,3 +10,15 @@ D:\WEB\Projects\Univer\Api\Univer.BLL\obj\Debug\netcoreapp3.1\Univer.BLL.csprojA
 D:\WEB\Projects\Univer\Api\Univer.BLL\bin\Debug\netcoreapp3.1\Univer.DAL.dll
 D:\WEB\Projects\Univer\Api\Univer.BLL\bin\Debug\netcoreapp3.1\Univer.DAL.pdb
 D:\WEB\Projects\Univer\Api\Univer.BLL\obj\Debug\netcoreapp3.1\Univer.BLL.csproj.CopyComplete
+D:\WebProj\Univer\Api\Univer.BLL\bin\Debug\netcoreapp3.1\Univer.BLL.deps.json
+D:\WebProj\Univer\Api\Univer.BLL\bin\Debug\netcoreapp3.1\Univer.BLL.dll
+D:\WebProj\Univer\Api\Univer.BLL\bin\Debug\netcoreapp3.1\Univer.BLL.pdb
+D:\WebProj\Univer\Api\Univer.BLL\bin\Debug\netcoreapp3.1\Univer.DAL.dll
+D:\WebProj\Univer\Api\Univer.BLL\bin\Debug\netcoreapp3.1\Univer.DAL.pdb
+D:\WebProj\Univer\Api\Univer.BLL\obj\Debug\netcoreapp3.1\Univer.BLL.csprojAssemblyReference.cache
+D:\WebProj\Univer\Api\Univer.BLL\obj\Debug\netcoreapp3.1\Univer.BLL.AssemblyInfoInputs.cache
+D:\WebProj\Univer\Api\Univer.BLL\obj\Debug\netcoreapp3.1\Univer.BLL.AssemblyInfo.cs
+D:\WebProj\Univer\Api\Univer.BLL\obj\Debug\netcoreapp3.1\Univer.BLL.csproj.CoreCompileInputs.cache
+D:\WebProj\Univer\Api\Univer.BLL\obj\Debug\netcoreapp3.1\Univer.BLL.csproj.CopyComplete
+D:\WebProj\Univer\Api\Univer.BLL\obj\Debug\netcoreapp3.1\Univer.BLL.dll
+D:\WebProj\Univer\Api\Univer.BLL\obj\Debug\netcoreapp3.1\Univer.BLL.pdb
