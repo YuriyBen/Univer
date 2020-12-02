@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,7 @@ using Univer.DAL;
 using Univer.DAL.Entities;
 using Univer.DAL.Helpers;
 using Univer.DAL.Models;
+using Univer.DAL.Models.Account;
 
 namespace Univer.Api.Controllers
 {
@@ -38,9 +40,12 @@ namespace Univer.Api.Controllers
         }
 
         [HttpGet("account/history")]
-        public async Task<ActionResult> GetHistory()
+        [Authorize]
+        public ActionResult GetHistory([FromBody] SimpleIdRequest simpleIdRequest)
         {
-            return new JsonResult(32);
+
+            var result = _userService.GetMyHistory(simpleIdRequest: simpleIdRequest);
+            return new JsonResult(result);
         }
 
     }

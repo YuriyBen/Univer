@@ -1,0 +1,14 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Univer.DAL.Models.Account
+{
+    public class HistoryDTO
+    {
+        public int Id { get; set; }
+        public DateTime Date { get; set; }
+        public string MatrixSizes { get; set; }
+        public long Result { get; set; }
+    }
+}

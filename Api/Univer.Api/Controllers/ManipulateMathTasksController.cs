@@ -31,9 +31,9 @@ namespace Univer.Api.Controllers
                 return new JsonResult( new ResponseBase<string> { Status = ResponeStatusCodes.BadRequest, Data = "Multiplication is not possible! The number of columns in the first matrix is ​​not equal to the number of rows in the second matrix." } );
             }
 
-            int result = await _mathService.MatrixMultiply(matrixMultiplyRequest: matrixMultiplyRequest);
+            long result = await _mathService.MatrixMultiply(matrixMultiplyRequest: matrixMultiplyRequest);
 
-            return new JsonResult(new ResponseBase<int> { Data = result } );
+            return new JsonResult(new ResponseBase<long> { Data = result } );
         }
 
 

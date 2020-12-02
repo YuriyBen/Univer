@@ -12,12 +12,14 @@ using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Univer.DAL.Models.Account;
 
 namespace Univer.BLL.Services
 {
     public class UserService : IUserService
     {
-        private const int TokenExpiresInHours = 2;
+        private const int AccessTokenExpiresInHours = 2;
+        private const int RefreshTokenExpiresInHours = 5;
         private readonly AppDbContext _context;
         private readonly AppSettings _appSettings;
 
@@ -63,30 +65,39 @@ namespace Univer.BLL.Services
         public async Task<object> Login(Login login)
         {
 
-            User user = await _context.Users.FirstOrDefaultAsync(user => user.Email == login.Email );
+            User user = await _context.Users.FirstOrDefaultAsync(user => user.Email == login.Email);
 
             if (user == null || !login.Password.CheckPasswordWithHash(user.PasswordHash).Verified)
             {
                 return new ResponseBase<string> { Status = ResponeStatusCodes.InvalidLoginOrPassword, Data = ErrorMessages.InvalidLoginOrPassword };
             }
-            
+
             user.UserPublicData = _context.UsersPublicData.FirstOrDefault(userData => userData.UserId == user.Id);
 
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(this._appSettings.JWT_SecretKey);
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new Claim[]
-                {
-                    new Claim(ClaimTypes.Name, user.Id.ToString())
-                }),
-                Expires = DateTime.UtcNow.AddHours(TokenExpiresInHours),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            string accessToken = tokenHandler.WriteToken(token);
+            string accessToken = JWT_Helper.GenerateJWT(secretKey: this._appSettings.JWT_SecretKey, userId: user.Id, expiresInHours: AccessTokenExpiresInHours);
+            string refreshToken = JWT_Helper.GenerateJWT(secretKey: this._appSettings.JWT_SecretKey, userId: user.Id, expiresInHours: RefreshTokenExpiresInHours);
 
-            return new ResponseBase<LoginResponse> { Data = new LoginResponse { AccessToken = accessToken, User = new UserDTO{ Id = user.Id, Email = user.Email, UserName = user.UserPublicData.UserName } } };
+            return new ResponseBase<LoginResponse> { Data = new LoginResponse { AccessToken = accessToken, RefreshToken = refreshToken, User = new UserDTO { Id = user.Id, Email = user.Email, UserName = user.UserPublicData.UserName } } };
+        }
+
+        public object GetMyHistory(SimpleIdRequest simpleIdRequest)
+        {
+
+            IEnumerable<HistoryDTO> myHistory = _context.UsersPublicData.Include(x => x.History)
+                    .Where(x => x.UserId == simpleIdRequest.Id)
+                    .SelectMany(x => x.History
+                    .Select( history => 
+                        new HistoryDTO 
+                        { 
+                            Id = history.Id,
+                            Date = history.Date,
+                            MatrixSizes = history.MatrixSizes,
+                            Result = history.Result 
+                        } ));
+
+
+            return new ResponseBase<IEnumerable<HistoryDTO>> { Data = myHistory};
+
         }
     }
 }

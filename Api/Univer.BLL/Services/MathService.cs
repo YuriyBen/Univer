@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Univer.DAL;
+using Univer.DAL.Entities;
 using Univer.DAL.Models.Math;
 
 namespace Univer.BLL.Services
@@ -17,13 +19,16 @@ namespace Univer.BLL.Services
             this._context = context;
         }
 
-        public async Task<int> MatrixMultiply(MatrixMultiplyRequest matrixMultiplyRequest)
+        public async Task<long> MatrixMultiply(MatrixMultiplyRequest matrixMultiplyRequest)
         {
-			Random rand = new Random();
+			int userPublicDataId = _context.UsersPublicData.FirstOrDefault(u => u.UserId == matrixMultiplyRequest.UserId).Id;
+			string formattedMatrixSizes = this.FormatMatrixSize(matrixMultiplyRequest.rows_1, matrixMultiplyRequest.columns_1, matrixMultiplyRequest.rows_2, matrixMultiplyRequest.columns_2);
+			History history = await this.AddMathResultToDb(result: 0, userPublicDataId: userPublicDataId, formattedMatrixSize: formattedMatrixSizes, isBeingExecuted: true);
+
+            Random rand = new Random();
 			
 			var matrix1 = new int[matrixMultiplyRequest.rows_1, matrixMultiplyRequest.columns_1];
 			var matrix2 = new int[matrixMultiplyRequest.rows_2, matrixMultiplyRequest.columns_2];
-			int sum = 0;
 
 			for (var i = 0; i < matrixMultiplyRequest.rows_1; i++)
 			{
@@ -55,6 +60,9 @@ namespace Univer.BLL.Services
 					}
 				}
 			}
+
+			long sum = 0;
+
 			for (var i = 0; i < matrixMultiplyRequest.rows_1; i++)
 			{
 				for (var j = 0; j < matrixMultiplyRequest.columns_2; j++)
@@ -63,20 +71,31 @@ namespace Univer.BLL.Services
 				}
 			}
 
-			int userPublicDataId = _context.UsersPublicData.FirstOrDefault(u => u.UserId == matrixMultiplyRequest.UserId).Id;
+			
+			await this.ModifyHistoryInDb(historyToModify: history, result: sum);
 
-			string formattedMatrixSizes = this.FormatMatrixSize(matrixMultiplyRequest.rows_1, matrixMultiplyRequest.columns_1, matrixMultiplyRequest.rows_2, matrixMultiplyRequest.columns_2);
-			await this.AddMathResultToDb(result: sum, userPublicDataId: userPublicDataId, formattedMatrixSize: formattedMatrixSizes);
-
-			return sum;
+            return sum;
 		}
 
-        private async Task AddMathResultToDb(int result, int userPublicDataId, string formattedMatrixSize)
+        private async Task<History> AddMathResultToDb(int result, int userPublicDataId, string formattedMatrixSize, bool isBeingExecuted = false)
         {
-			await this._context.History.AddAsync(new DAL.Entities.History { Date = DateTime.Now, UserPublicDataId = userPublicDataId, Result = result, MatrixSizes = formattedMatrixSize });
+			History history =  this._context.History.Add(new History { Date = DateTime.Now, UserPublicDataId = userPublicDataId, Result = result, MatrixSizes = formattedMatrixSize, IsCurrentlyExecuted = isBeingExecuted }).Entity;
 
 			await this._context.SaveChangesAsync();
+			return history;
         }
+
+		private async Task ModifyHistoryInDb(long result, History historyToModify)
+        {
+            historyToModify.IsCurrentlyExecuted = false;
+            historyToModify.Result = result;
+
+			var entity = _context.History.Attach(historyToModify);
+			entity.State = EntityState.Modified;
+
+            await this._context.SaveChangesAsync();
+
+		}
 
 		private string FormatMatrixSize(int rows_1, int columns_1, int rows_2, int columns_2)
         {

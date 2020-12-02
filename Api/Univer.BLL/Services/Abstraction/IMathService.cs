@@ -5,6 +5,6 @@ namespace Univer.BLL.Services
 {
     public interface IMathService
     {
-        Task<int> MatrixMultiply(MatrixMultiplyRequest matrixMultiplyRequest);
+        Task<long> MatrixMultiply(MatrixMultiplyRequest matrixMultiplyRequest);
     }
 }

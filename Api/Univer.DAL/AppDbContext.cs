@@ -21,6 +21,12 @@ namespace Univer.DAL
             modelBuilder.Entity<History>()
                 .HasOne(g => g.UserPublicData)
                 .WithMany(s => s.History);
+
+            modelBuilder.Entity<History>(entity =>
+            {
+                // Set key for entity
+                entity.HasKey(p => p.Id);
+            });
         }
     }
 }
