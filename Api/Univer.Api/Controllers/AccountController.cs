@@ -15,12 +15,10 @@ namespace Univer.Api.Controllers
     public class AccountController : ControllerBase
     {
         private readonly IUserService _userService;
-        private readonly AppDbContext _context;
 
-        public AccountController(IUserService userService, AppDbContext context)
+        public AccountController(IUserService userService)
         {
             this._userService = userService;
-            this._context = context;
         }
 
         [HttpPost("register")]

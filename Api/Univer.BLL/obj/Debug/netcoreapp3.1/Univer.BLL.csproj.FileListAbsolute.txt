@@ -3,7 +3,6 @@ D:\WEB\Projects\Univer\Api\Univer.BLL\bin\Debug\netcoreapp3.1\Univer.BLL.dll
 D:\WEB\Projects\Univer\Api\Univer.BLL\bin\Debug\netcoreapp3.1\Univer.BLL.pdb
 D:\WEB\Projects\Univer\Api\Univer.BLL\obj\Debug\netcoreapp3.1\Univer.BLL.AssemblyInfoInputs.cache
 D:\WEB\Projects\Univer\Api\Univer.BLL\obj\Debug\netcoreapp3.1\Univer.BLL.AssemblyInfo.cs
-D:\WEB\Projects\Univer\Api\Univer.BLL\obj\Debug\netcoreapp3.1\Univer.BLL.csproj.CoreCompileInputs.cache
 D:\WEB\Projects\Univer\Api\Univer.BLL\obj\Debug\netcoreapp3.1\Univer.BLL.dll
 D:\WEB\Projects\Univer\Api\Univer.BLL\obj\Debug\netcoreapp3.1\Univer.BLL.pdb
 D:\WEB\Projects\Univer\Api\Univer.BLL\obj\Debug\netcoreapp3.1\Univer.BLL.csprojAssemblyReference.cache
@@ -22,3 +21,4 @@ D:\WebProj\Univer\Api\Univer.BLL\obj\Debug\netcoreapp3.1\Univer.BLL.csproj.CoreC
 D:\WebProj\Univer\Api\Univer.BLL\obj\Debug\netcoreapp3.1\Univer.BLL.csproj.CopyComplete
 D:\WebProj\Univer\Api\Univer.BLL\obj\Debug\netcoreapp3.1\Univer.BLL.dll
 D:\WebProj\Univer\Api\Univer.BLL\obj\Debug\netcoreapp3.1\Univer.BLL.pdb
+D:\WEB\Projects\Univer\Api\Univer.BLL\obj\Debug\netcoreapp3.1\Univer.BLL.csproj.CoreCompileInputs.cache

@@ -6,9 +6,10 @@ namespace Univer.DAL.Models.Math
 {
     public class MatrixMultiplyRequest
     {
-        public int row_1 { get; set; }
-        public int column_1 { get; set; }
-        public int row_2 { get; set; }
-        public int column_2 { get; set; }
+        public int UserId { get; set; }
+        public int rows_1 { get; set; }
+        public int columns_1 { get; set; }
+        public int rows_2 { get; set; }
+        public int columns_2 { get; set; }
     }
 }

@@ -1,7 +1,10 @@
-﻿namespace Univer.BLL.Services
+﻿using System.Threading.Tasks;
+using Univer.DAL.Models.Math;
+
+namespace Univer.BLL.Services
 {
     public interface IMathService
     {
-        int MatrixMultiply(int rows_1, int columns_1, int rows_2, int columns_2);
+        Task<int> MatrixMultiply(MatrixMultiplyRequest matrixMultiplyRequest);
     }
 }

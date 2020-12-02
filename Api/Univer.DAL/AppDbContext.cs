@@ -19,7 +19,7 @@ namespace Univer.DAL
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<History>()
-                .HasOne(g => g.User)
+                .HasOne(g => g.UserPublicData)
                 .WithMany(s => s.History);
         }
     }

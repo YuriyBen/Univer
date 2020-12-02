@@ -11,7 +11,8 @@ namespace Univer.DAL.Entities
         public string MatrixSizes { get; set; }
         public int Result { get; set; }
 
-        public UserPublicData User { get; set; }
+        public int UserPublicDataId { get; set; }
+        public UserPublicData UserPublicData { get; set; }
 
     }
 }

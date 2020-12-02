@@ -1,23 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\WebProj\\Univer\\Api\\Univer.Api\\Univer.Api.csproj": {}
+    "D:\\WEB\\Projects\\Univer\\Api\\Univer.Api\\Univer.Api.csproj": {}
   },
   "projects": {
-    "D:\\WebProj\\Univer\\Api\\Univer.Api\\Univer.Api.csproj": {
+    "D:\\WEB\\Projects\\Univer\\Api\\Univer.Api\\Univer.Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\WebProj\\Univer\\Api\\Univer.Api\\Univer.Api.csproj",
+        "projectUniqueName": "D:\\WEB\\Projects\\Univer\\Api\\Univer.Api\\Univer.Api.csproj",
         "projectName": "Univer.Api",
-        "projectPath": "D:\\WebProj\\Univer\\Api\\Univer.Api\\Univer.Api.csproj",
-        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "D:\\WebProj\\Univer\\Api\\Univer.Api\\obj\\",
+        "projectPath": "D:\\WEB\\Projects\\Univer\\Api\\Univer.Api\\Univer.Api.csproj",
+        "packagesPath": "C:\\Users\\yurbe\\.nuget\\packages\\",
+        "outputPath": "D:\\WEB\\Projects\\Univer\\Api\\Univer.Api\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\yurbe\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -29,13 +26,12 @@
         },
         "frameworks": {
           "netcoreapp3.1": {
-            "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "D:\\WebProj\\Univer\\Api\\Univer.BLL\\Univer.BLL.csproj": {
-                "projectPath": "D:\\WebProj\\Univer\\Api\\Univer.BLL\\Univer.BLL.csproj"
+              "D:\\WEB\\Projects\\Univer\\Api\\Univer.BLL\\Univer.BLL.csproj": {
+                "projectPath": "D:\\WEB\\Projects\\Univer\\Api\\Univer.BLL\\Univer.BLL.csproj"
               },
-              "D:\\WebProj\\Univer\\Api\\Univer.DAL\\Univer.DAL.csproj": {
-                "projectPath": "D:\\WebProj\\Univer\\Api\\Univer.DAL\\Univer.DAL.csproj"
+              "D:\\WEB\\Projects\\Univer\\Api\\Univer.DAL\\Univer.DAL.csproj": {
+                "projectPath": "D:\\WEB\\Projects\\Univer\\Api\\Univer.DAL\\Univer.DAL.csproj"
               }
             }
           }
@@ -48,7 +44,6 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
-          "targetAlias": "netcoreapp3.1",
           "dependencies": {
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
@@ -87,24 +82,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.401\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\WebProj\\Univer\\Api\\Univer.BLL\\Univer.BLL.csproj": {
+    "D:\\WEB\\Projects\\Univer\\Api\\Univer.BLL\\Univer.BLL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\WebProj\\Univer\\Api\\Univer.BLL\\Univer.BLL.csproj",
+        "projectUniqueName": "D:\\WEB\\Projects\\Univer\\Api\\Univer.BLL\\Univer.BLL.csproj",
         "projectName": "Univer.BLL",
-        "projectPath": "D:\\WebProj\\Univer\\Api\\Univer.BLL\\Univer.BLL.csproj",
-        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "D:\\WebProj\\Univer\\Api\\Univer.BLL\\obj\\",
+        "projectPath": "D:\\WEB\\Projects\\Univer\\Api\\Univer.BLL\\Univer.BLL.csproj",
+        "packagesPath": "C:\\Users\\yurbe\\.nuget\\packages\\",
+        "outputPath": "D:\\WEB\\Projects\\Univer\\Api\\Univer.BLL\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\yurbe\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -116,10 +108,9 @@
         },
         "frameworks": {
           "netcoreapp3.1": {
-            "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "D:\\WebProj\\Univer\\Api\\Univer.DAL\\Univer.DAL.csproj": {
-                "projectPath": "D:\\WebProj\\Univer\\Api\\Univer.DAL\\Univer.DAL.csproj"
+              "D:\\WEB\\Projects\\Univer\\Api\\Univer.DAL\\Univer.DAL.csproj": {
+                "projectPath": "D:\\WEB\\Projects\\Univer\\Api\\Univer.DAL\\Univer.DAL.csproj"
               }
             }
           }
@@ -132,7 +123,12 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
-          "targetAlias": "netcoreapp3.1",
+          "dependencies": {
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[6.8.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -148,24 +144,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.401\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\WebProj\\Univer\\Api\\Univer.DAL\\Univer.DAL.csproj": {
+    "D:\\WEB\\Projects\\Univer\\Api\\Univer.DAL\\Univer.DAL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\WebProj\\Univer\\Api\\Univer.DAL\\Univer.DAL.csproj",
+        "projectUniqueName": "D:\\WEB\\Projects\\Univer\\Api\\Univer.DAL\\Univer.DAL.csproj",
         "projectName": "Univer.DAL",
-        "projectPath": "D:\\WebProj\\Univer\\Api\\Univer.DAL\\Univer.DAL.csproj",
-        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "D:\\WebProj\\Univer\\Api\\Univer.DAL\\obj\\",
+        "projectPath": "D:\\WEB\\Projects\\Univer\\Api\\Univer.DAL\\Univer.DAL.csproj",
+        "packagesPath": "C:\\Users\\yurbe\\.nuget\\packages\\",
+        "outputPath": "D:\\WEB\\Projects\\Univer\\Api\\Univer.DAL\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\yurbe\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -177,7 +170,6 @@
         },
         "frameworks": {
           "netcoreapp3.1": {
-            "targetAlias": "netcoreapp3.1",
             "projectReferences": {}
           }
         },
@@ -189,7 +181,6 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
-          "targetAlias": "netcoreapp3.1",
           "dependencies": {
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
@@ -227,7 +218,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.401\\RuntimeIdentifierGraph.json"
         }
       }
     }
