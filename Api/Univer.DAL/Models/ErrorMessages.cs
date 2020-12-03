@@ -8,5 +8,6 @@ namespace Univer.DAL.Models
     {
         public const string InvalidLoginOrPassword = "Invalid email or password";
         public const string UserAlreayExists = "User with same email already exists";
+        public const string TokenIsValid = "Token is valid yet";
     }
 }

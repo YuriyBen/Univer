@@ -10,6 +10,10 @@ namespace Univer.DAL.Models
         BadRequest = 1,
         InvalidLoginOrPassword = 2,
         UserAlreayExists = 3,
+
+
+
+        TokenIsValid = 100
     }
 }
 

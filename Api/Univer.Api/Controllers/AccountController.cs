@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
 using Univer.BLL.Services;
@@ -39,8 +40,16 @@ namespace Univer.Api.Controllers
             return new JsonResult(result);
         }
 
+        [HttpPost("refresh-token")]
+        public ActionResult RefreshToken([FromBody] RefreshTokenRequest refreshTokenRequest)
+        {
+            var result = this._userService.RefreshToken(refreshTokenRequest: refreshTokenRequest);
+
+            return new JsonResult(result);
+        }
+
         [HttpGet("account/history")]
-        [Authorize]
+        //[Authorize]
         public ActionResult GetHistory([FromBody] SimpleIdRequest simpleIdRequest)
         {
 

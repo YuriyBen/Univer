@@ -74,10 +74,41 @@ namespace Univer.BLL.Services
 
             user.UserPublicData = _context.UsersPublicData.FirstOrDefault(userData => userData.UserId == user.Id);
 
-            string accessToken = JWT_Helper.GenerateJWT(secretKey: this._appSettings.JWT_SecretKey, userId: user.Id, expiresInHours: AccessTokenExpiresInHours);
-            string refreshToken = JWT_Helper.GenerateJWT(secretKey: this._appSettings.JWT_SecretKey, userId: user.Id, expiresInHours: RefreshTokenExpiresInHours);
+            (string accessToken, string refreshToken) = this.GenerateJWT_Tokens(user.Id);
 
             return new ResponseBase<LoginResponse> { Data = new LoginResponse { AccessToken = accessToken, RefreshToken = refreshToken, User = new UserDTO { Id = user.Id, Email = user.Email, UserName = user.UserPublicData.UserName } } };
+        }
+
+        public object RefreshToken(RefreshTokenRequest refreshTokenRequest)
+        {
+            JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
+            JwtSecurityToken decodedTokenData = handler.ReadToken(refreshTokenRequest.RefreshToken) as JwtSecurityToken;
+
+            int userIdFromToken = Int32.Parse(decodedTokenData.Claims.FirstOrDefault(x => x.Type == "unique_name").Value);
+
+
+            DateTime validTo = decodedTokenData.ValidTo;
+            DateTime now = DateTime.Now;
+
+            if (decodedTokenData.ValidTo <= DateTime.Now)
+            {
+                (string accessToken, string refreshToken) = this.GenerateJWT_Tokens(userId: userIdFromToken);
+                return new ResponseBase<RefreshTokenResponse> { Data = new RefreshTokenResponse { AccessToken = accessToken, RefreshToken = refreshToken } };
+            }
+            else
+            {
+                return new ResponseBase<string> { Status = ResponeStatusCodes.TokenIsValid, Data = ErrorMessages.TokenIsValid };
+            }
+
+
+        }
+
+        public (string AccessToken, string RefreshToken) GenerateJWT_Tokens(int userId)
+        {
+            string accessToken = JWT_Helper.GenerateJWT(secretKey: this._appSettings.JWT_SecretKey, userId: userId, expiresInHours: AccessTokenExpiresInHours);
+            string refreshToken = JWT_Helper.GenerateJWT(secretKey: this._appSettings.JWT_SecretKey, userId: userId, expiresInHours: RefreshTokenExpiresInHours);
+
+            return (AccessToken: accessToken, RefreshToken: refreshToken);
         }
 
         public object GetMyHistory(SimpleIdRequest simpleIdRequest)
@@ -99,5 +130,6 @@ namespace Univer.BLL.Services
             return new ResponseBase<IEnumerable<HistoryDTO>> { Data = myHistory};
 
         }
+
     }
 }
