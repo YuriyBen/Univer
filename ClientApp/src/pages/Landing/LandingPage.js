@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styles from "./LandingPage.module.css";
-import Login from "../../Login/Login";
-import Registration from "../../Registration/Registration";
+import Login from "../../Forms/Login";
+import Registration from "../../Forms/Registration";
 
 export default class LandingPage extends Component {
 	state = {

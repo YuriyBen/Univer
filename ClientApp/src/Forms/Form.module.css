@@ -1,4 +1,4 @@
-.Login {
+.Form {
 	width: 400px;
 	height: fit-content;
 	border: 1px solid #ccc;
@@ -14,11 +14,11 @@
 	transform: translate(-50%, -50%);
 }
 
-.Login button {
+.Form button {
 	width: 80px;
 }
 
-.Login p {
+.Form p {
 	text-decoration: underline;
 	cursor: pointer;
 	font-size: small;

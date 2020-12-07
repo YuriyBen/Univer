@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import styles from "./Registration.module.css";
+import styles from "./Form.module.css";
 
 export default class Registration extends Component {
 	state = {
@@ -8,9 +8,11 @@ export default class Registration extends Component {
 		lastName: "",
 		email: "",
 		password: "",
+		loading: false,
 	};
 
 	register = () => {
+		this.setState({ loading: true });
 		console.log(this.state);
 		axios
 			.post("https://localhost:44326/api/register", {
@@ -21,17 +23,31 @@ export default class Registration extends Component {
 			})
 			.then(result => {
 				console.log("success");
+				this.setState({ loading: false });
 				this.props.toggle();
 			})
 			.catch(error => {
+				this.setState({ loading: false });
 				console.error(error);
 			});
 	};
 
+	isButtonDisabled = () => {
+		return (
+			this.state.fisrtName === "" ||
+			this.state.lastName === "" ||
+			this.state.email === "" ||
+			this.state.password === "" ||
+			this.state.loading
+		);
+	};
+
 	render() {
 		return (
-			<div className={styles.Registration}>
+			<div className={styles.Form}>
 				<h1>Registration</h1>
+				{this.state.loading ? <label>Loading...</label> : null}
+				<br />
 				<input
 					placeholder="First name"
 					type="text"
@@ -64,11 +80,7 @@ export default class Registration extends Component {
 					}}
 				/>
 				<br />
-				<button
-					onClick={() => {
-						console.log(this.state);
-					}}
-				>
+				<button disabled={this.isButtonDisabled()} onClick={this.register}>
 					OK
 				</button>
 				<p onClick={this.props.toggle}>Already have an account? Log in</p>

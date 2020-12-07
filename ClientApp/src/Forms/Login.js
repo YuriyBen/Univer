@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import styles from "./Login.module.css";
+import styles from "./Form.module.css";
 import axios from "axios";
 import { connect } from "react-redux";
 import * as actionTypes from "../store/actions/actionTypes";
@@ -12,21 +12,30 @@ class Login extends Component {
 	};
 
 	login = () => {
+		this.setState({ loading: true });
 		console.log(this.state);
 		axios
 			.post("https://localhost:44326/api/login", { email: this.state.login, password: this.state.password })
 			.then(result => {
 				this.props.setAuthData(result.data.data);
+				this.setState({ loading: false });
 			})
 			.catch(error => {
 				console.error(error);
+				this.setState({ loading: false });
 			});
+	};
+
+	isButtonDisabled = () => {
+		return this.state.login === "" || this.state.password === "" || this.state.loading;
 	};
 
 	render() {
 		return (
-			<div className={styles.Login}>
+			<div className={styles.Form}>
 				<h1>Login</h1>
+				{this.state.loading ? <label>Loading...</label> : null}
+				<br />
 				<input
 					placeholder="E-mail"
 					type="text"
@@ -43,7 +52,9 @@ class Login extends Component {
 					}}
 				/>
 				<br />
-				<button onClick={this.login}>OK</button>
+				<button disabled={this.isButtonDisabled()} onClick={this.login}>
+					OK
+				</button>
 				<p onClick={this.props.toggle}>Create an account</p>
 			</div>
 		);
