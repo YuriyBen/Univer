@@ -3,6 +3,7 @@ import { Route, Switch, Redirect } from "react-router";
 import "./App.css";
 import { connect } from "react-redux";
 import * as actionTypes from "./store/actions/actionTypes";
+import LandingPage from "./pages/Landing/LandingPage";
 
 class App extends React.Component {
 	componentWillMount() {
@@ -13,6 +14,7 @@ class App extends React.Component {
 		return (
 			<React.Fragment>
 				<Switch>
+					<Route exact path="/" component={LandingPage} />
 					<Route exact path="/qwe" component={null} />
 					<Redirect to="/" />
 				</Switch>

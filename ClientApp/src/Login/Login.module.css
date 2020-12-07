@@ -1,0 +1,26 @@
+.Login {
+	width: 400px;
+	height: fit-content;
+	border: 1px solid #ccc;
+	box-shadow: 10px 10px 10px #ccc;
+	padding: 20px;
+	text-align: center;
+
+	margin: 0;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	-ms-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+}
+
+.Login button {
+	width: 80px;
+}
+
+.Login p {
+	text-decoration: underline;
+	cursor: pointer;
+	font-size: small;
+	margin: 10px 10px 30px 10px;
+}
