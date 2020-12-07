@@ -49,7 +49,7 @@ namespace Univer.Api.Controllers
         }
 
         [HttpGet("account/history")]
-        //[Authorize]
+        [Authorize]
         public ActionResult GetHistory([FromBody] SimpleIdRequest simpleIdRequest)
         {
 

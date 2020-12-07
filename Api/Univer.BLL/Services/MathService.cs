@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Univer.DAL;
 using Univer.DAL.Entities;
@@ -19,7 +20,17 @@ namespace Univer.BLL.Services
             this._context = context;
         }
 
-        public async Task<long> MatrixMultiply(MatrixMultiplyRequest matrixMultiplyRequest)
+		private async Task PreviousStateDueToCanceledRequest(History history)
+        {
+			history.IsCanceled = true;
+			history.IsCurrentlyExecuted = false;
+
+			await this.ModifyHistoryInDb(historyToModify: history);
+
+			await this._context.SaveChangesAsync();
+		}
+
+		public async Task<long> MatrixMultiply(MatrixMultiplyRequest matrixMultiplyRequest, CancellationToken cancellationToken)
         {
 			int userPublicDataId = _context.UsersPublicData.FirstOrDefault(u => u.UserId == matrixMultiplyRequest.UserId).Id;
 			string formattedMatrixSizes = this.FormatMatrixSize(matrixMultiplyRequest.rows_1, matrixMultiplyRequest.columns_1, matrixMultiplyRequest.rows_2, matrixMultiplyRequest.columns_2);
@@ -34,14 +45,22 @@ namespace Univer.BLL.Services
 			{
 				for (var j = 0; j < matrixMultiplyRequest.columns_1; j++)
 				{
-					matrix1[i, j] = rand.Next(0, 10); ;
+					matrix1[i, j] = rand.Next(0, 10);
+                    if (cancellationToken.IsCancellationRequested)
+                    {
+						await this.PreviousStateDueToCanceledRequest(history: history);
+                    }
 				}
 			}
 			for (var i = 0; i < matrixMultiplyRequest.rows_2; i++)
 			{
 				for (var j = 0; j < matrixMultiplyRequest.columns_2; j++)
 				{
-					matrix2[i, j] = rand.Next(0, 10); ;
+					matrix2[i, j] = rand.Next(0, 10);
+					if (cancellationToken.IsCancellationRequested)
+					{
+						await this.PreviousStateDueToCanceledRequest(history: history);
+					}
 				}
 			}
 
@@ -53,10 +72,18 @@ namespace Univer.BLL.Services
 				for (var j = 0; j < matrixMultiplyRequest.columns_2; j++)
 				{
 					matrix3[i, j] = 0;
+					if (cancellationToken.IsCancellationRequested)
+					{
+						await this.PreviousStateDueToCanceledRequest(history: history);
+					}
 
 					for (var k = 0; k < matrixMultiplyRequest.columns_1; k++)
 					{
 						matrix3[i, j] += matrix1[i, k] * matrix2[k, j];
+						if (cancellationToken.IsCancellationRequested)
+						{
+							await this.PreviousStateDueToCanceledRequest(history: history);
+						}
 					}
 				}
 			}
@@ -68,11 +95,17 @@ namespace Univer.BLL.Services
 				for (var j = 0; j < matrixMultiplyRequest.columns_2; j++)
 				{
 					sum += matrix3[i, j];
+					if (cancellationToken.IsCancellationRequested)
+					{
+						await this.PreviousStateDueToCanceledRequest(history: history);
+					}
+
 				}
 			}
 
-			
-			await this.ModifyHistoryInDb(historyToModify: history, result: sum);
+			history.IsCurrentlyExecuted = false;
+			history.Result = sum;
+			await this.ModifyHistoryInDb(historyToModify: history);
 
             return sum;
 		}
@@ -85,16 +118,13 @@ namespace Univer.BLL.Services
 			return history;
         }
 
-		private async Task ModifyHistoryInDb(long result, History historyToModify)
-        {
-            historyToModify.IsCurrentlyExecuted = false;
-            historyToModify.Result = result;
 
+		private async Task ModifyHistoryInDb(History historyToModify)
+        {
 			var entity = _context.History.Attach(historyToModify);
 			entity.State = EntityState.Modified;
 
             await this._context.SaveChangesAsync();
-
 		}
 
 		private string FormatMatrixSize(int rows_1, int columns_1, int rows_2, int columns_2)

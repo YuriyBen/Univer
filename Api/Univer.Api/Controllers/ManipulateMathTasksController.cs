@@ -25,17 +25,24 @@ namespace Univer.Api.Controllers
 
 
         [HttpPost("math-task")]
-        public async Task<ActionResult> MatrixMultiply([FromBody] MatrixMultiplyRequest matrixMultiplyRequest) //TODO CancellationToken cancellationToken
+        public async Task<ActionResult> MatrixMultiply([FromBody] MatrixMultiplyRequest matrixMultiplyRequest, CancellationToken cancellationToken) 
         {
             if (matrixMultiplyRequest.columns_1 != matrixMultiplyRequest.rows_2)
             {
                 return new JsonResult( new ResponseBase<string> { Status = ResponeStatusCodes.BadRequest, Data = "Multiplication is not possible! The number of columns in the first matrix is ​​not equal to the number of rows in the second matrix." } );
             }
 
+            try
+            {
+                long result = await _mathService.MatrixMultiply(matrixMultiplyRequest: matrixMultiplyRequest, cancellationToken: cancellationToken);
 
-            long result = await _mathService.MatrixMultiply(matrixMultiplyRequest: matrixMultiplyRequest);
+                return new JsonResult(new ResponseBase<long> { Data = result });
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new ResponseBase<string> {Status = ResponeStatusCodes.RequestIsCanceled, Data = ex.Message });
+            }
 
-            return new JsonResult(new ResponseBase<long> { Data = result } );
         }
 
 

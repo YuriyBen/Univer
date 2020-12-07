@@ -18,8 +18,8 @@ namespace Univer.BLL.Services
 {
     public class UserService : IUserService
     {
-        private const int AccessTokenExpiresInHours = 2;
-        private const int RefreshTokenExpiresInHours = 5;
+        private const int AccessTokenExpiresInHours = 4;
+        private const int RefreshTokenExpiresInHours = 7;
         private readonly AppDbContext _context;
         private readonly AppSettings _appSettings;
 
@@ -123,7 +123,9 @@ namespace Univer.BLL.Services
                             Id = history.Id,
                             Date = history.Date,
                             MatrixSizes = history.MatrixSizes,
-                            Result = history.Result 
+                            Result = history.Result,
+                            IsCurrentlyExecuted = history.IsCurrentlyExecuted,
+                            IsCanceled = history.IsCanceled
                         } ));
 
 

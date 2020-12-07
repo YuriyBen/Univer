@@ -20,7 +20,7 @@ namespace Univer.DAL.Helpers
                 {
                     new Claim(ClaimTypes.Name, userId.ToString())
                 }),
-                Expires = DateTime.Now.AddHours(expiresInHours + 2),
+                Expires = DateTime.Now.AddHours(expiresInHours),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
