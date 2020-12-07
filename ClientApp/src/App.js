@@ -3,7 +3,9 @@ import { Route, Switch, Redirect } from "react-router";
 import "./App.css";
 import { connect } from "react-redux";
 import * as actionTypes from "./store/actions/actionTypes";
+
 import LandingPage from "./pages/Landing/LandingPage";
+import HomePage from "./pages/Home/HomePage";
 
 class App extends React.Component {
 	componentWillMount() {
@@ -14,9 +16,17 @@ class App extends React.Component {
 		return (
 			<React.Fragment>
 				<Switch>
-					<Route exact path="/" component={LandingPage} />
-					<Route exact path="/qwe" component={null} />
-					<Redirect to="/" />
+					{this.props.isAuthenticated ? (
+						<React.Fragment>
+							<Route exact path="/home" component={HomePage} />
+							<Redirect to="/home" />
+						</React.Fragment>
+					) : (
+						<React.Fragment>
+							<Route exact path="/" component={LandingPage} />
+							<Redirect to="/" />
+						</React.Fragment>
+					)}
 				</Switch>
 			</React.Fragment>
 		);
@@ -31,9 +41,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		setUserData: authData => {
-			dispatch({ type: actionTypes.SET_USER_DATA, authData: authData });
-		},
 		setAuthData: authData => {
 			dispatch({ type: actionTypes.SET_AUTH_DATA, authData: authData });
 		},

@@ -14,25 +14,34 @@ const initialState = {
 export const clearCookies = () => {
 	cookies.remove("accessToken");
 	cookies.remove("refreshToken");
-	cookies.remove("tokenType");
+	cookies.remove("userId");
+	cookies.remove("userName");
+	cookies.remove("email");
 };
 
 const initAuthData = (state, action) => {
-	return updateObject(state, { isAuthenticated: Boolean(cookies.get("accessToken")) });
+	return updateObject(state, {
+		isAuthenticated: Boolean(cookies.get("accessToken")),
+		userId: cookies.get("userId"),
+		userName: cookies.get("userName"),
+		email: cookies.get("email"),
+	});
 };
 
 const setAuthData = (state, action) => {
 	clearCookies();
 	const expires = new Date(new Date().getTime() + 10 * 365 * 24 * 60 * 60 * 1000);
 
-	cookies.set("accessToken", action.authData.access_token, { expires, path: "/" });
-	cookies.set("refreshToken", action.authData.refresh_token, { expires, path: "/" });
-	cookies.set("tokenType", action.authData.token_type, { expires, path: "/" });
+	cookies.set("accessToken", action.authData.accessToken, { expires, path: "/" });
+	cookies.set("refreshToken", action.authData.refreshToken, { expires, path: "/" });
+	cookies.set("userId", action.authData.user.id, { expires, path: "/" });
+	cookies.set("userName", action.authData.user.userName, { expires, path: "/" });
+	cookies.set("email", action.authData.user.email, { expires, path: "/" });
 
 	return updateObject(state, {
 		isAuthenticated: true,
 		userId: action.authData.user.id,
-		userName: action.authData.user.name,
+		userName: action.authData.user.userName,
 		email: action.authData.user.email,
 	});
 };

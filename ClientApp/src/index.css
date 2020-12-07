@@ -3,10 +3,26 @@ body {
 	padding: 0px;
 	height: 100%;
 	width: 100%;
-	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
-		"Droid Sans", "Helvetica Neue", sans-serif;
+	/* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+		"Droid Sans", "Helvetica Neue", sans-serif; */
+	font-family: "Press Start 2P", cursive;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+	color: lightgrey;
+}
+
+input {
+	background-color: #a6b2ff;
+	color: rgb(73, 73, 73);
+	font-family: "Press Start 2P", cursive;
+	margin: 2px;
+	height: 20px;
+}
+
+button {
+	color: rgb(73, 73, 73);
+	font-family: "Press Start 2P", cursive;
+	margin: 2px;
 }
 
 #root,

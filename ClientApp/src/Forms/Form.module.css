@@ -1,8 +1,7 @@
 .Form {
-	width: 400px;
+	width: 500px;
 	height: fit-content;
-	border: 1px solid #ccc;
-	box-shadow: 10px 10px 10px #ccc;
+	box-shadow: 15px 10px 0px rgba(0, 0, 0, 0.377);
 	padding: 20px;
 	text-align: center;
 
@@ -12,6 +11,7 @@
 	left: 50%;
 	-ms-transform: translate(-50%, -50%);
 	transform: translate(-50%, -50%);
+	background-color: #0827f5;
 }
 
 .Form button {

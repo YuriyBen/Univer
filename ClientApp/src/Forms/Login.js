@@ -33,7 +33,7 @@ class Login extends Component {
 	render() {
 		return (
 			<div className={styles.Form}>
-				<h1>Login</h1>
+				<h1>Log in</h1>
 				{this.state.loading ? <label>Loading...</label> : null}
 				<br />
 				<input
