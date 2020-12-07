@@ -13,7 +13,8 @@ namespace Univer.DAL.Models
 
 
 
-        TokenIsValid = 100
+        TokenIsValid = 100,
+        RequestIsCanceled = 101
     }
 }
 
