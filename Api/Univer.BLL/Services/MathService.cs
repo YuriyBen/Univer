@@ -22,7 +22,6 @@ namespace Univer.BLL.Services
 
 		private async Task PreviousStateDueToCanceledRequest(History history, CancellationToken cancellationToken)
         {
-			cancellationToken.ThrowIfCancellationRequested();
 
 			history.IsCanceled = true;
 			history.IsCurrentlyExecuted = false;
@@ -30,6 +29,9 @@ namespace Univer.BLL.Services
 			await this.ModifyHistoryInDb(historyToModify: history);
 
 			await this._context.SaveChangesAsync();
+
+			cancellationToken.ThrowIfCancellationRequested();
+
 		}
 
 		public async Task<long> MatrixMultiply(MatrixMultiplyRequest matrixMultiplyRequest, CancellationToken cancellationToken)
