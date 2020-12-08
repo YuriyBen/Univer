@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\WEB\\Projects\\Univer\\Api\\Univer.Api\\Univer.Api.csproj": {}
+    "C:\\Users\\Nazar\\source\\repos\\Univer\\Api\\Univer.Api\\Univer.Api.csproj": {}
   },
   "projects": {
-    "D:\\WEB\\Projects\\Univer\\Api\\Univer.Api\\Univer.Api.csproj": {
+    "C:\\Users\\Nazar\\source\\repos\\Univer\\Api\\Univer.Api\\Univer.Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\WEB\\Projects\\Univer\\Api\\Univer.Api\\Univer.Api.csproj",
+        "projectUniqueName": "C:\\Users\\Nazar\\source\\repos\\Univer\\Api\\Univer.Api\\Univer.Api.csproj",
         "projectName": "Univer.Api",
-        "projectPath": "D:\\WEB\\Projects\\Univer\\Api\\Univer.Api\\Univer.Api.csproj",
-        "packagesPath": "C:\\Users\\yurbe\\.nuget\\packages\\",
-        "outputPath": "D:\\WEB\\Projects\\Univer\\Api\\Univer.Api\\obj\\",
+        "projectPath": "C:\\Users\\Nazar\\source\\repos\\Univer\\Api\\Univer.Api\\Univer.Api.csproj",
+        "packagesPath": "C:\\Users\\Nazar\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Nazar\\source\\repos\\Univer\\Api\\Univer.Api\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\yurbe\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Nazar\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -27,11 +27,11 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "D:\\WEB\\Projects\\Univer\\Api\\Univer.BLL\\Univer.BLL.csproj": {
-                "projectPath": "D:\\WEB\\Projects\\Univer\\Api\\Univer.BLL\\Univer.BLL.csproj"
+              "C:\\Users\\Nazar\\source\\repos\\Univer\\Api\\Univer.BLL\\Univer.BLL.csproj": {
+                "projectPath": "C:\\Users\\Nazar\\source\\repos\\Univer\\Api\\Univer.BLL\\Univer.BLL.csproj"
               },
-              "D:\\WEB\\Projects\\Univer\\Api\\Univer.DAL\\Univer.DAL.csproj": {
-                "projectPath": "D:\\WEB\\Projects\\Univer\\Api\\Univer.DAL\\Univer.DAL.csproj"
+              "C:\\Users\\Nazar\\source\\repos\\Univer\\Api\\Univer.DAL\\Univer.DAL.csproj": {
+                "projectPath": "C:\\Users\\Nazar\\source\\repos\\Univer\\Api\\Univer.DAL\\Univer.DAL.csproj"
               }
             }
           }
@@ -86,17 +86,17 @@
         }
       }
     },
-    "D:\\WEB\\Projects\\Univer\\Api\\Univer.BLL\\Univer.BLL.csproj": {
+    "C:\\Users\\Nazar\\source\\repos\\Univer\\Api\\Univer.BLL\\Univer.BLL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\WEB\\Projects\\Univer\\Api\\Univer.BLL\\Univer.BLL.csproj",
+        "projectUniqueName": "C:\\Users\\Nazar\\source\\repos\\Univer\\Api\\Univer.BLL\\Univer.BLL.csproj",
         "projectName": "Univer.BLL",
-        "projectPath": "D:\\WEB\\Projects\\Univer\\Api\\Univer.BLL\\Univer.BLL.csproj",
-        "packagesPath": "C:\\Users\\yurbe\\.nuget\\packages\\",
-        "outputPath": "D:\\WEB\\Projects\\Univer\\Api\\Univer.BLL\\obj\\",
+        "projectPath": "C:\\Users\\Nazar\\source\\repos\\Univer\\Api\\Univer.BLL\\Univer.BLL.csproj",
+        "packagesPath": "C:\\Users\\Nazar\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Nazar\\source\\repos\\Univer\\Api\\Univer.BLL\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\yurbe\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Nazar\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -109,8 +109,8 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "D:\\WEB\\Projects\\Univer\\Api\\Univer.DAL\\Univer.DAL.csproj": {
-                "projectPath": "D:\\WEB\\Projects\\Univer\\Api\\Univer.DAL\\Univer.DAL.csproj"
+              "C:\\Users\\Nazar\\source\\repos\\Univer\\Api\\Univer.DAL\\Univer.DAL.csproj": {
+                "projectPath": "C:\\Users\\Nazar\\source\\repos\\Univer\\Api\\Univer.DAL\\Univer.DAL.csproj"
               }
             }
           }
@@ -148,17 +148,17 @@
         }
       }
     },
-    "D:\\WEB\\Projects\\Univer\\Api\\Univer.DAL\\Univer.DAL.csproj": {
+    "C:\\Users\\Nazar\\source\\repos\\Univer\\Api\\Univer.DAL\\Univer.DAL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\WEB\\Projects\\Univer\\Api\\Univer.DAL\\Univer.DAL.csproj",
+        "projectUniqueName": "C:\\Users\\Nazar\\source\\repos\\Univer\\Api\\Univer.DAL\\Univer.DAL.csproj",
         "projectName": "Univer.DAL",
-        "projectPath": "D:\\WEB\\Projects\\Univer\\Api\\Univer.DAL\\Univer.DAL.csproj",
-        "packagesPath": "C:\\Users\\yurbe\\.nuget\\packages\\",
-        "outputPath": "D:\\WEB\\Projects\\Univer\\Api\\Univer.DAL\\obj\\",
+        "projectPath": "C:\\Users\\Nazar\\source\\repos\\Univer\\Api\\Univer.DAL\\Univer.DAL.csproj",
+        "packagesPath": "C:\\Users\\Nazar\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Nazar\\source\\repos\\Univer\\Api\\Univer.DAL\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\yurbe\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Nazar\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

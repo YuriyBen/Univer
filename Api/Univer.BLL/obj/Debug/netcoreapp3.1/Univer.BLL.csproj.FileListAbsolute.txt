@@ -22,3 +22,15 @@ D:\WebProj\Univer\Api\Univer.BLL\obj\Debug\netcoreapp3.1\Univer.BLL.csproj.CopyC
 D:\WebProj\Univer\Api\Univer.BLL\obj\Debug\netcoreapp3.1\Univer.BLL.dll
 D:\WebProj\Univer\Api\Univer.BLL\obj\Debug\netcoreapp3.1\Univer.BLL.pdb
 D:\WEB\Projects\Univer\Api\Univer.BLL\obj\Debug\netcoreapp3.1\Univer.BLL.csproj.CoreCompileInputs.cache
+C:\Users\Nazar\source\repos\Univer\Api\Univer.BLL\bin\Debug\netcoreapp3.1\Univer.BLL.deps.json
+C:\Users\Nazar\source\repos\Univer\Api\Univer.BLL\bin\Debug\netcoreapp3.1\Univer.BLL.dll
+C:\Users\Nazar\source\repos\Univer\Api\Univer.BLL\bin\Debug\netcoreapp3.1\Univer.BLL.pdb
+C:\Users\Nazar\source\repos\Univer\Api\Univer.BLL\bin\Debug\netcoreapp3.1\Univer.DAL.dll
+C:\Users\Nazar\source\repos\Univer\Api\Univer.BLL\bin\Debug\netcoreapp3.1\Univer.DAL.pdb
+C:\Users\Nazar\source\repos\Univer\Api\Univer.BLL\obj\Debug\netcoreapp3.1\Univer.BLL.csprojAssemblyReference.cache
+C:\Users\Nazar\source\repos\Univer\Api\Univer.BLL\obj\Debug\netcoreapp3.1\Univer.BLL.AssemblyInfoInputs.cache
+C:\Users\Nazar\source\repos\Univer\Api\Univer.BLL\obj\Debug\netcoreapp3.1\Univer.BLL.AssemblyInfo.cs
+C:\Users\Nazar\source\repos\Univer\Api\Univer.BLL\obj\Debug\netcoreapp3.1\Univer.BLL.csproj.CoreCompileInputs.cache
+C:\Users\Nazar\source\repos\Univer\Api\Univer.BLL\obj\Debug\netcoreapp3.1\Univer.BLL.csproj.CopyComplete
+C:\Users\Nazar\source\repos\Univer\Api\Univer.BLL\obj\Debug\netcoreapp3.1\Univer.BLL.dll
+C:\Users\Nazar\source\repos\Univer\Api\Univer.BLL\obj\Debug\netcoreapp3.1\Univer.BLL.pdb

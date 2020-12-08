@@ -5799,19 +5799,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\yurbe\\.nuget\\packages\\": {}
+    "C:\\Users\\Nazar\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\WEB\\Projects\\Univer\\Api\\Univer.DAL\\Univer.DAL.csproj",
+      "projectUniqueName": "C:\\Users\\Nazar\\source\\repos\\Univer\\Api\\Univer.DAL\\Univer.DAL.csproj",
       "projectName": "Univer.DAL",
-      "projectPath": "D:\\WEB\\Projects\\Univer\\Api\\Univer.DAL\\Univer.DAL.csproj",
-      "packagesPath": "C:\\Users\\yurbe\\.nuget\\packages\\",
-      "outputPath": "D:\\WEB\\Projects\\Univer\\Api\\Univer.DAL\\obj\\",
+      "projectPath": "C:\\Users\\Nazar\\source\\repos\\Univer\\Api\\Univer.DAL\\Univer.DAL.csproj",
+      "packagesPath": "C:\\Users\\Nazar\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Nazar\\source\\repos\\Univer\\Api\\Univer.DAL\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\yurbe\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Nazar\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

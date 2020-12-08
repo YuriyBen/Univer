@@ -22,3 +22,15 @@ D:\WebProj\Univer\Api\Univer.DAL\obj\Debug\netcoreapp3.1\Univer.DAL.csproj.CoreC
 D:\WebProj\Univer\Api\Univer.DAL\obj\Debug\netcoreapp3.1\Univer.DAL.dll
 D:\WebProj\Univer\Api\Univer.DAL\obj\Debug\netcoreapp3.1\Univer.DAL.pdb
 D:\WebProj\Univer\Api\Univer.DAL\obj\Debug\netcoreapp3.1\Univer.DAL.genruntimeconfig.cache
+C:\Users\Nazar\source\repos\Univer\Api\Univer.DAL\bin\Debug\netcoreapp3.1\Univer.DAL.deps.json
+C:\Users\Nazar\source\repos\Univer\Api\Univer.DAL\bin\Debug\netcoreapp3.1\Univer.DAL.runtimeconfig.json
+C:\Users\Nazar\source\repos\Univer\Api\Univer.DAL\bin\Debug\netcoreapp3.1\Univer.DAL.runtimeconfig.dev.json
+C:\Users\Nazar\source\repos\Univer\Api\Univer.DAL\bin\Debug\netcoreapp3.1\Univer.DAL.dll
+C:\Users\Nazar\source\repos\Univer\Api\Univer.DAL\bin\Debug\netcoreapp3.1\Univer.DAL.pdb
+C:\Users\Nazar\source\repos\Univer\Api\Univer.DAL\obj\Debug\netcoreapp3.1\Univer.DAL.csprojAssemblyReference.cache
+C:\Users\Nazar\source\repos\Univer\Api\Univer.DAL\obj\Debug\netcoreapp3.1\Univer.DAL.AssemblyInfoInputs.cache
+C:\Users\Nazar\source\repos\Univer\Api\Univer.DAL\obj\Debug\netcoreapp3.1\Univer.DAL.AssemblyInfo.cs
+C:\Users\Nazar\source\repos\Univer\Api\Univer.DAL\obj\Debug\netcoreapp3.1\Univer.DAL.csproj.CoreCompileInputs.cache
+C:\Users\Nazar\source\repos\Univer\Api\Univer.DAL\obj\Debug\netcoreapp3.1\Univer.DAL.dll
+C:\Users\Nazar\source\repos\Univer\Api\Univer.DAL\obj\Debug\netcoreapp3.1\Univer.DAL.pdb
+C:\Users\Nazar\source\repos\Univer\Api\Univer.DAL\obj\Debug\netcoreapp3.1\Univer.DAL.genruntimeconfig.cache
