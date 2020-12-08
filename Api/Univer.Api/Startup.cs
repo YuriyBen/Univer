@@ -80,9 +80,10 @@ namespace Univer.Api
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseCors("UniverCorsPolicy");
 
             app.UseHttpsRedirection();
+
+            app.UseCors("UniverCorsPolicy");
 
             app.UseRouting();
 
