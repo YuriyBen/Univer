@@ -29,6 +29,11 @@ namespace Univer.Api
         {
             services.AddControllers();
 
+            services.AddCors(options => options.AddPolicy("UniverCorsPolicy",
+                             builer => builer.AllowAnyOrigin()
+                                             .AllowAnyMethod()
+                                             .AllowAnyHeader()));
+
             services.AddDbContext<AppDbContext>(
                 optionsAction: dbContextOptionsBuilder => dbContextOptionsBuilder.UseSqlServer(
                     this.Configuration["ConnectionStrings:DefaultConnection"])
@@ -74,6 +79,8 @@ namespace Univer.Api
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors("UniverCorsPolicy");
 
             app.UseHttpsRedirection();
 

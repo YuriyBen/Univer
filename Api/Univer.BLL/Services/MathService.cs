@@ -20,8 +20,10 @@ namespace Univer.BLL.Services
             this._context = context;
         }
 
-		private async Task PreviousStateDueToCanceledRequest(History history)
+		private async Task PreviousStateDueToCanceledRequest(History history, CancellationToken cancellationToken)
         {
+			cancellationToken.ThrowIfCancellationRequested();
+
 			history.IsCanceled = true;
 			history.IsCurrentlyExecuted = false;
 
@@ -33,6 +35,14 @@ namespace Univer.BLL.Services
 		public async Task<long> MatrixMultiply(MatrixMultiplyRequest matrixMultiplyRequest, CancellationToken cancellationToken)
         {
 			int userPublicDataId = _context.UsersPublicData.FirstOrDefault(u => u.UserId == matrixMultiplyRequest.UserId).Id;
+
+			int amountOfSimultaneouslyExecutedTasks = await this._context.History.Where(item => item.UserPublicDataId == userPublicDataId && item.IsCurrentlyExecuted).CountAsync();
+
+			if(amountOfSimultaneouslyExecutedTasks > 1)
+            {
+				return 444444444;
+            }
+
 			string formattedMatrixSizes = this.FormatMatrixSize(matrixMultiplyRequest.rows_1, matrixMultiplyRequest.columns_1, matrixMultiplyRequest.rows_2, matrixMultiplyRequest.columns_2);
 			History history = await this.AddMathResultToDb(result: 0, userPublicDataId: userPublicDataId, formattedMatrixSize: formattedMatrixSizes, isBeingExecuted: true);
 
@@ -48,7 +58,7 @@ namespace Univer.BLL.Services
 					matrix1[i, j] = rand.Next(0, 10);
                     if (cancellationToken.IsCancellationRequested)
                     {
-						await this.PreviousStateDueToCanceledRequest(history: history);
+						await this.PreviousStateDueToCanceledRequest(history: history, cancellationToken: cancellationToken);
                     }
 				}
 			}
@@ -59,7 +69,7 @@ namespace Univer.BLL.Services
 					matrix2[i, j] = rand.Next(0, 10);
 					if (cancellationToken.IsCancellationRequested)
 					{
-						await this.PreviousStateDueToCanceledRequest(history: history);
+						await this.PreviousStateDueToCanceledRequest(history: history, cancellationToken: cancellationToken);
 					}
 				}
 			}
@@ -74,7 +84,7 @@ namespace Univer.BLL.Services
 					matrix3[i, j] = 0;
 					if (cancellationToken.IsCancellationRequested)
 					{
-						await this.PreviousStateDueToCanceledRequest(history: history);
+						await this.PreviousStateDueToCanceledRequest(history: history, cancellationToken: cancellationToken);
 					}
 
 					for (var k = 0; k < matrixMultiplyRequest.columns_1; k++)
@@ -82,7 +92,7 @@ namespace Univer.BLL.Services
 						matrix3[i, j] += matrix1[i, k] * matrix2[k, j];
 						if (cancellationToken.IsCancellationRequested)
 						{
-							await this.PreviousStateDueToCanceledRequest(history: history);
+							await this.PreviousStateDueToCanceledRequest(history: history, cancellationToken: cancellationToken);
 						}
 					}
 				}
@@ -97,7 +107,7 @@ namespace Univer.BLL.Services
 					sum += matrix3[i, j];
 					if (cancellationToken.IsCancellationRequested)
 					{
-						await this.PreviousStateDueToCanceledRequest(history: history);
+						await this.PreviousStateDueToCanceledRequest(history: history, cancellationToken: cancellationToken);
 					}
 
 				}
