@@ -80,7 +80,6 @@ namespace Univer.Api
                 app.UseDeveloperExceptionPage();
             }
 
-
             app.UseHttpsRedirection();
 
             app.UseCors("UniverCorsPolicy");
