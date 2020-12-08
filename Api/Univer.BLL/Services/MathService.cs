@@ -7,12 +7,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using Univer.DAL;
 using Univer.DAL.Entities;
+using Univer.DAL.Models;
 using Univer.DAL.Models.Math;
 
 namespace Univer.BLL.Services
 {
     public class MathService : IMathService
     {
+		private const int AmountOfSimulateniouslyExecutedTasks = 2;
         private readonly AppDbContext _context;
 
         public MathService(AppDbContext context)
@@ -34,92 +36,107 @@ namespace Univer.BLL.Services
 
 		}
 
-		public async Task<long> MatrixMultiply(MatrixMultiplyRequest matrixMultiplyRequest, CancellationToken cancellationToken)
+		public async Task<object> MatrixMultiply(MatrixMultiplyRequest matrixMultiplyRequest, CancellationToken cancellationToken)
         {
-			int userPublicDataId = _context.UsersPublicData.FirstOrDefault(u => u.UserId == matrixMultiplyRequest.UserId).Id;
-
-			int amountOfSimultaneouslyExecutedTasks = await this._context.History.Where(item => item.UserPublicDataId == userPublicDataId && item.IsCurrentlyExecuted).CountAsync();
-
-			if(amountOfSimultaneouslyExecutedTasks > 1)
-            {
-				return 444444444;
-            }
-
-			string formattedMatrixSizes = this.FormatMatrixSize(matrixMultiplyRequest.rows_1, matrixMultiplyRequest.columns_1, matrixMultiplyRequest.rows_2, matrixMultiplyRequest.columns_2);
-			History history = await this.AddMathResultToDb(result: 0, userPublicDataId: userPublicDataId, formattedMatrixSize: formattedMatrixSizes, isBeingExecuted: true);
-
-            Random rand = new Random();
-			
-			var matrix1 = new int[matrixMultiplyRequest.rows_1, matrixMultiplyRequest.columns_1];
-			var matrix2 = new int[matrixMultiplyRequest.rows_2, matrixMultiplyRequest.columns_2];
-
-			for (var i = 0; i < matrixMultiplyRequest.rows_1; i++)
+			if (matrixMultiplyRequest.columns_1 != matrixMultiplyRequest.rows_2)
 			{
-				for (var j = 0; j < matrixMultiplyRequest.columns_1; j++)
-				{
-					matrix1[i, j] = rand.Next(0, 10);
-                    if (cancellationToken.IsCancellationRequested)
-                    {
-						await this.PreviousStateDueToCanceledRequest(history: history, cancellationToken: cancellationToken);
-                    }
-				}
-			}
-			for (var i = 0; i < matrixMultiplyRequest.rows_2; i++)
-			{
-				for (var j = 0; j < matrixMultiplyRequest.columns_2; j++)
-				{
-					matrix2[i, j] = rand.Next(0, 10);
-					if (cancellationToken.IsCancellationRequested)
-					{
-						await this.PreviousStateDueToCanceledRequest(history: history, cancellationToken: cancellationToken);
-					}
-				}
+				return new ResponseBase<string> { Status = ResponeStatusCodes.BadRequest, Data = ErrorMessages.MatrixSizesEror };
 			}
 
-
-			var matrix3 = new int[matrixMultiplyRequest.rows_1, matrixMultiplyRequest.columns_2];
-
-			for (var i = 0; i < matrixMultiplyRequest.rows_1 ; i++)
+			try
 			{
-				for (var j = 0; j < matrixMultiplyRequest.columns_2; j++)
-				{
-					matrix3[i, j] = 0;
-					if (cancellationToken.IsCancellationRequested)
-					{
-						await this.PreviousStateDueToCanceledRequest(history: history, cancellationToken: cancellationToken);
-					}
+				int userPublicDataId = _context.UsersPublicData.FirstOrDefault(u => u.UserId == matrixMultiplyRequest.UserId).Id;
 
-					for (var k = 0; k < matrixMultiplyRequest.columns_1; k++)
+				int amountOfSimultaneouslyExecutedTasks = await this._context.History.Where(item => item.UserPublicDataId == userPublicDataId && item.IsCurrentlyExecuted).CountAsync();
+
+				if (amountOfSimultaneouslyExecutedTasks + 1 /*+1 means +1 thread for current task*/ > AmountOfSimulateniouslyExecutedTasks)
+				{
+					return new ResponseBase<string> { Status = ResponeStatusCodes.LimitOfExecutableTasks, Data = ErrorMessages.LimitOfExecutableTasks };
+				}
+
+				string formattedMatrixSizes = this.FormatMatrixSize(matrixMultiplyRequest.rows_1, matrixMultiplyRequest.columns_1, matrixMultiplyRequest.rows_2, matrixMultiplyRequest.columns_2);
+				History history = await this.AddMathResultToDb(result: 0, userPublicDataId: userPublicDataId, formattedMatrixSize: formattedMatrixSizes, isBeingExecuted: true);
+
+				Random rand = new Random();
+
+				var matrix1 = new int[matrixMultiplyRequest.rows_1, matrixMultiplyRequest.columns_1];
+				var matrix2 = new int[matrixMultiplyRequest.rows_2, matrixMultiplyRequest.columns_2];
+
+				for (var i = 0; i < matrixMultiplyRequest.rows_1; i++)
+				{
+					for (var j = 0; j < matrixMultiplyRequest.columns_1; j++)
 					{
-						matrix3[i, j] += matrix1[i, k] * matrix2[k, j];
+						matrix1[i, j] = rand.Next(0, 10);
 						if (cancellationToken.IsCancellationRequested)
 						{
 							await this.PreviousStateDueToCanceledRequest(history: history, cancellationToken: cancellationToken);
 						}
 					}
 				}
-			}
-
-			long sum = 0;
-
-			for (var i = 0; i < matrixMultiplyRequest.rows_1; i++)
-			{
-				for (var j = 0; j < matrixMultiplyRequest.columns_2; j++)
+				for (var i = 0; i < matrixMultiplyRequest.rows_2; i++)
 				{
-					sum += matrix3[i, j];
-					if (cancellationToken.IsCancellationRequested)
+					for (var j = 0; j < matrixMultiplyRequest.columns_2; j++)
 					{
-						await this.PreviousStateDueToCanceledRequest(history: history, cancellationToken: cancellationToken);
+						matrix2[i, j] = rand.Next(0, 10);
+						if (cancellationToken.IsCancellationRequested)
+						{
+							await this.PreviousStateDueToCanceledRequest(history: history, cancellationToken: cancellationToken);
+						}
 					}
-
 				}
+
+
+				var matrix3 = new int[matrixMultiplyRequest.rows_1, matrixMultiplyRequest.columns_2];
+
+				for (var i = 0; i < matrixMultiplyRequest.rows_1; i++)
+				{
+					for (var j = 0; j < matrixMultiplyRequest.columns_2; j++)
+					{
+						matrix3[i, j] = 0;
+						if (cancellationToken.IsCancellationRequested)
+						{
+							await this.PreviousStateDueToCanceledRequest(history: history, cancellationToken: cancellationToken);
+						}
+
+						for (var k = 0; k < matrixMultiplyRequest.columns_1; k++)
+						{
+							matrix3[i, j] += matrix1[i, k] * matrix2[k, j];
+							if (cancellationToken.IsCancellationRequested)
+							{
+								await this.PreviousStateDueToCanceledRequest(history: history, cancellationToken: cancellationToken);
+							}
+						}
+					}
+				}
+
+				long sum = 0;
+
+				for (var i = 0; i < matrixMultiplyRequest.rows_1; i++)
+				{
+					for (var j = 0; j < matrixMultiplyRequest.columns_2; j++)
+					{
+						sum += matrix3[i, j];
+						if (cancellationToken.IsCancellationRequested)
+						{
+							await this.PreviousStateDueToCanceledRequest(history: history, cancellationToken: cancellationToken);
+						}
+
+					}
+				}
+
+				history.IsCurrentlyExecuted = false;
+				history.Result = sum;
+				await this.ModifyHistoryInDb(historyToModify: history);
+
+				return new ResponseBase<string> { Data = $"Result is equal to {sum}" };
+
+			}
+			catch (Exception ex)
+			{
+				return new ResponseBase<string> { Status = ResponeStatusCodes.UnexpectedServerError, Data = $"Ooops. {ex.Message}" };
+
 			}
 
-			history.IsCurrentlyExecuted = false;
-			history.Result = sum;
-			await this.ModifyHistoryInDb(historyToModify: history);
-
-            return sum;
 		}
 
         private async Task<History> AddMathResultToDb(int result, int userPublicDataId, string formattedMatrixSize, bool isBeingExecuted = false)

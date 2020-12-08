@@ -12,9 +12,10 @@ namespace Univer.DAL.Models
         UserAlreayExists = 3,
 
 
-
         TokenIsValid = 100,
-        RequestIsCanceled = 101
+        LimitOfExecutableTasks = 101,
+        UnexpectedServerError = 102,
+
     }
 }
 

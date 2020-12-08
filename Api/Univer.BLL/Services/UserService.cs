@@ -57,50 +57,65 @@ namespace Univer.BLL.Services
             }
             catch (Exception ex)
             {
-                return new ResponseBase<string> { Status = ResponeStatusCodes.BadRequest, Data = $"Ooops. {ex.Message}" };
+                return new ResponseBase<string> { Status = ResponeStatusCodes.UnexpectedServerError, Data = $"Ooops. {ex.Message}" };
 
             }
         }
 
         public async Task<object> Login(Login login)
         {
-
-            User user = await _context.Users.FirstOrDefaultAsync(user => user.Email == login.Email);
-
-            if (user == null || !login.Password.CheckPasswordWithHash(user.PasswordHash).Verified)
+            try
             {
-                return new ResponseBase<string> { Status = ResponeStatusCodes.InvalidLoginOrPassword, Data = ErrorMessages.InvalidLoginOrPassword };
+                User user = await _context.Users.FirstOrDefaultAsync(user => user.Email == login.Email);
+
+                if (user == null || !login.Password.CheckPasswordWithHash(user.PasswordHash).Verified)
+                {
+                    return new ResponseBase<string> { Status = ResponeStatusCodes.InvalidLoginOrPassword, Data = ErrorMessages.InvalidLoginOrPassword };
+                }
+
+                user.UserPublicData = _context.UsersPublicData.FirstOrDefault(userData => userData.UserId == user.Id);
+
+                (string accessToken, string refreshToken) = this.GenerateJWT_Tokens(user.Id);
+
+                return new ResponseBase<LoginResponse> { Data = new LoginResponse { AccessToken = accessToken, RefreshToken = refreshToken, User = new UserDTO { Id = user.Id, Email = user.Email, UserName = user.UserPublicData.UserName } } };
             }
+            catch (Exception ex)
+            {
+                return new ResponseBase<string> { Status = ResponeStatusCodes.UnexpectedServerError, Data = $"Ooops. {ex.Message}" };
 
-            user.UserPublicData = _context.UsersPublicData.FirstOrDefault(userData => userData.UserId == user.Id);
-
-            (string accessToken, string refreshToken) = this.GenerateJWT_Tokens(user.Id);
-
-            return new ResponseBase<LoginResponse> { Data = new LoginResponse { AccessToken = accessToken, RefreshToken = refreshToken, User = new UserDTO { Id = user.Id, Email = user.Email, UserName = user.UserPublicData.UserName } } };
+            }
         }
 
         public object RefreshToken(RefreshTokenRequest refreshTokenRequest)
         {
-            JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
-            JwtSecurityToken decodedTokenData = handler.ReadToken(refreshTokenRequest.RefreshToken) as JwtSecurityToken;
 
-            int userIdFromToken = Int32.Parse(decodedTokenData.Claims.FirstOrDefault(x => x.Type == "unique_name").Value);
-
-
-            DateTime validTo = decodedTokenData.ValidTo;
-            DateTime now = DateTime.Now;
-
-            if (decodedTokenData.ValidTo <= DateTime.Now)
+            try
             {
-                (string accessToken, string refreshToken) = this.GenerateJWT_Tokens(userId: userIdFromToken);
-                return new ResponseBase<RefreshTokenResponse> { Data = new RefreshTokenResponse { AccessToken = accessToken, RefreshToken = refreshToken } };
+                JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
+                JwtSecurityToken decodedTokenData = handler.ReadToken(refreshTokenRequest.RefreshToken) as JwtSecurityToken;
+
+                int userIdFromToken = Int32.Parse(decodedTokenData.Claims.FirstOrDefault(x => x.Type == "unique_name").Value);
+
+
+                DateTime validTo = decodedTokenData.ValidTo;
+                DateTime now = DateTime.Now;
+
+                if (decodedTokenData.ValidTo <= DateTime.Now)
+                {
+                    (string accessToken, string refreshToken) = this.GenerateJWT_Tokens(userId: userIdFromToken);
+                    return new ResponseBase<RefreshTokenResponse> { Data = new RefreshTokenResponse { AccessToken = accessToken, RefreshToken = refreshToken } };
+                }
+                else
+                {
+                    return new ResponseBase<string> { Status = ResponeStatusCodes.TokenIsValid, Data = ErrorMessages.TokenIsValid };
+                }
+
             }
-            else
+            catch (Exception ex)
             {
-                return new ResponseBase<string> { Status = ResponeStatusCodes.TokenIsValid, Data = ErrorMessages.TokenIsValid };
+                return new ResponseBase<string> { Status = ResponeStatusCodes.UnexpectedServerError, Data = $"Ooops. {ex.Message}" };
+
             }
-
-
         }
 
         public (string AccessToken, string RefreshToken) GenerateJWT_Tokens(int userId)
@@ -113,23 +128,29 @@ namespace Univer.BLL.Services
 
         public object GetMyHistory(SimpleIdRequest simpleIdRequest)
         {
+            try
+            {
+                IEnumerable<HistoryDTO> myHistory = _context.UsersPublicData.Include(x => x.History)
+                        .Where(x => x.UserId == simpleIdRequest.Id)
+                        .SelectMany(x => x.History
+                        .Select(history =>
+                           new HistoryDTO
+                            {
+                                Id = history.Id,
+                                Date = history.Date,
+                                MatrixSizes = history.MatrixSizes,
+                                Result = history.Result,
+                                IsCurrentlyExecuted = history.IsCurrentlyExecuted,
+                                IsCanceled = history.IsCanceled
+                            }));
 
-            IEnumerable<HistoryDTO> myHistory = _context.UsersPublicData.Include(x => x.History)
-                    .Where(x => x.UserId == simpleIdRequest.Id)
-                    .SelectMany(x => x.History
-                    .Select( history => 
-                        new HistoryDTO 
-                        { 
-                            Id = history.Id,
-                            Date = history.Date,
-                            MatrixSizes = history.MatrixSizes,
-                            Result = history.Result,
-                            IsCurrentlyExecuted = history.IsCurrentlyExecuted,
-                            IsCanceled = history.IsCanceled
-                        } ));
+                return new ResponseBase<IEnumerable<HistoryDTO>> { Data = myHistory };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseBase<string> { Status = ResponeStatusCodes.UnexpectedServerError, Data = $"Ooops. {ex.Message}" };
 
-
-            return new ResponseBase<IEnumerable<HistoryDTO>> { Data = myHistory};
+            }
 
         }
 
