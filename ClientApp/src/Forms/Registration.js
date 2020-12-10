@@ -9,26 +9,25 @@ export default class Registration extends Component {
 		email: "",
 		password: "",
 		loading: false,
+		errorMessage: "",
 	};
 
 	register = () => {
 		this.setState({ loading: true });
-		console.log(this.state);
 		axios
 			.post("https://localhost:44326/api/register", {
 				firstName: this.state.firstName,
 				lastName: this.state.lastName,
-				email: this.state.login,
+				email: this.state.email,
 				password: this.state.password,
 			})
 			.then(result => {
-				console.log("success");
 				this.setState({ loading: false });
-				this.props.toggle();
-			})
-			.catch(error => {
-				this.setState({ loading: false });
-				console.error(error);
+				if (result.data.status === 0) {
+					this.props.toggle();
+				} else {
+					this.setState({ errorMessage: result.data.data });
+				}
 			});
 	};
 
@@ -79,6 +78,8 @@ export default class Registration extends Component {
 						this.setState({ password: event.target.value });
 					}}
 				/>
+				<br />
+				<label className={styles.errorMessage}>{this.state.errorMessage}</label>
 				<br />
 				<button disabled={this.isButtonDisabled()} onClick={this.register}>
 					OK

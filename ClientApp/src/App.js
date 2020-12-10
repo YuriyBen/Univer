@@ -8,7 +8,7 @@ import LandingPage from "./pages/Landing/LandingPage";
 import HomePage from "./pages/Home/HomePage";
 
 class App extends React.Component {
-	componentWillMount() {
+	componentDidMount() {
 		this.props.initAuthData();
 	}
 
