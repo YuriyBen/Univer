@@ -4,6 +4,7 @@
 	background-color: #06157a;
 	padding: 10px;
 	box-sizing: border-box;
+	overflow-y: auto;
 }
 
 .HomePage h1 {
@@ -49,6 +50,7 @@ button:disabled {
 	width: 50%;
 	display: inline-block;
 	box-sizing: border-box;
+	height: fit-content;
 }
 
 .InputHolder {

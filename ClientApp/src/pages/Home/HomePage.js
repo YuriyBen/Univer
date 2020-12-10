@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import styles from "./HomePage.module.css";
 import { connect } from "react-redux";
 import * as actionTypes from "../../store/actions/actionTypes";
+import Matrix from "../../components/Matrix/Matrix";
 import axios from "axios";
 
 class HomePage extends Component {
@@ -14,6 +15,8 @@ class HomePage extends Component {
 		rangeMax: "",
 		enabledGenerate: false,
 		enacleCalculate: false,
+		firstMatrix: [],
+		secondMatrix: [],
 	};
 
 	enabledC = () => {
@@ -37,31 +40,28 @@ class HomePage extends Component {
 		}
 	};
 
-	//TO:range normalnyi bl9
 	generate = () => {
-		var matrix1 = [];
-		for (let i = 0; i < this.state.matrix1R; i++) {
-			matrix1[i] = [];
-			for (let j = 0; j < this.state.matrix1C; j++) {
-				matrix1[i][j] = Math.floor(
-					Math.random() *
-						(this.state.rangeMax - this.state.rangeMin + 1) +
-						this.state.rangeMin
+		const firstMatrix = [];
+		for (let a = 0; a < this.state.matrix1R; ++a) {
+			firstMatrix.push([]);
+			for (let b = 0; b < this.state.matrix1C; ++b) {
+				firstMatrix[a].push(
+					Math.round(Math.random() * (+this.state.rangeMax - +this.state.rangeMin) + +this.state.rangeMin)
 				);
 			}
 		}
 
-		var matrix2 = [];
-		for (let i = 0; i < this.state.matrix2R; i++) {
-			matrix2[i] = [];
-			for (let j = 0; j < this.state.matrix2C; j++) {
-				matrix2[i][j] = Math.floor(
-					Math.random() *
-						(this.state.rangeMax - this.state.rangeMin + 1) +
-						this.state.rangeMin
+		const secondMatrix = [];
+		for (let a = 0; a < this.state.matrix2R; ++a) {
+			secondMatrix.push([]);
+			for (let b = 0; b < this.state.matrix2C; ++b) {
+				secondMatrix[a].push(
+					Math.round(Math.random() * (+this.state.rangeMax - +this.state.rangeMin) + +this.state.rangeMin)
 				);
 			}
 		}
+
+		this.setState({ firstMatrix, secondMatrix });
 	};
 
 	claculate = () => {
@@ -71,10 +71,10 @@ class HomePage extends Component {
 		};
 		axios
 			.post("/", matrix)
-			.then((response) => {
+			.then(response => {
 				console.log(response);
 			})
-			.catch((error) => {
+			.catch(error => {
 				console.log(error);
 			});
 	};
@@ -82,10 +82,7 @@ class HomePage extends Component {
 	render() {
 		return (
 			<div className={styles.HomePage}>
-				<div>
-					WELCOME, {this.props.userName}, WANNA MULYIPLY SOME
-					MATRIXES?
-				</div>
+				<div>WELCOME, {this.props.userName}, WANNA MULYIPLY SOME MATRIXES?</div>
 				<button onClick={this.props.logout}>LOG OUT</button>
 				<div className={styles.Range}>
 					<div>RANGE OF MATRIX ELEMENTS VALUES</div>
@@ -93,34 +90,27 @@ class HomePage extends Component {
 						placeholder="from"
 						type="number"
 						value={this.state.rangeMin}
-						onChange={(event) => {
-							this.setState(
-								{ rangeMin: event.target.value },
-								this.enabledC
-							);
+						onChange={event => {
+							this.setState({ rangeMin: event.target.value }, this.enabledC);
 						}}
 					/>
 					<input
 						placeholder="to"
 						type="number"
 						value={this.state.rangeMax}
-						onChange={(event) => {
-							this.setState(
-								{ rangeMax: event.target.value },
-								this.enabledC
-							);
+						onChange={event => {
+							this.setState({ rangeMax: event.target.value }, this.enabledC);
 						}}
 					/>
 					<div>
 						<button
 							disabled={!this.state.enabledGenerate}
 							style={{ margin: "15px" }}
-							onClick={this.generate}>
+							onClick={this.generate}
+						>
 							GENERATE
 						</button>
-						<button
-							disabled={!this.state.enabledCalculate}
-							style={{ margin: "15px" }}>
+						<button disabled={!this.state.enabledCalculate} style={{ margin: "15px" }}>
 							MULTIPLY
 						</button>
 					</div>
@@ -132,7 +122,7 @@ class HomePage extends Component {
 							placeholder="column"
 							type="number"
 							value={this.state.matrix1C}
-							onChange={(event) => {
+							onChange={event => {
 								this.setState(
 									{
 										matrix1C: event.target.value,
@@ -146,17 +136,12 @@ class HomePage extends Component {
 							placeholder="row"
 							type="number"
 							value={this.state.matrix1R}
-							onChange={(event) => {
-								this.setState(
-									{ matrix1R: event.target.value },
-									this.enabledC
-								);
+							onChange={event => {
+								this.setState({ matrix1R: event.target.value }, this.enabledC);
 							}}
 						/>
 					</div>
-					<div className={styles.Matrix}>
-						686868686868688686686868686868688686686868686868688686686868686868688686686868686868688686686868686868688686686868686868688686686868686868688686
-					</div>
+					<Matrix source={this.state.firstMatrix} />
 				</div>
 				<div className={styles.MatrixHolder}>
 					<div className={styles.InputHolder}>
@@ -165,35 +150,27 @@ class HomePage extends Component {
 							placeholder="column"
 							type="number"
 							value={this.state.matrix2C}
-							onChange={(event) => {
-								this.setState(
-									{ matrix2C: event.target.value },
-									this.enabledC
-								);
+							onChange={event => {
+								this.setState({ matrix2C: event.target.value }, this.enabledC);
 							}}
 						/>
-						<input
-							placeholder="row"
-							type="number"
-							value={this.state.matrix1C}
-							onChange={() => {}}
-						/>
+						<input placeholder="row" type="number" value={this.state.matrix1C} onChange={() => {}} />
 					</div>
-					<div className={styles.Matrix}>6</div>
+					<Matrix source={this.state.secondMatrix} />{" "}
 				</div>
 			</div>
 		);
 	}
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
 	return {
 		userName: state.userName,
 		isAuthenticated: state.isAuthenticated,
 	};
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
 	return {
 		logout: () => {
 			dispatch({ type: actionTypes.LOG_OUT });
