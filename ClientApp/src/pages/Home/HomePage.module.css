@@ -10,3 +10,39 @@
 	margin: 0px;
 	font-size: large;
 }
+
+.Window {
+}
+
+button {
+	background-color: #0822c7;
+	color: rgba(255, 255, 255, 0.658);
+	width: 150px;
+	height: 40px;
+}
+
+button:enabled:hover {
+	background-color: #3b55ff;
+	color: rgb(47, 255, 5);
+}
+
+button:disabled {
+	background-color: #06157a;
+	color: rgba(135, 93, 233, 0.445);
+}
+
+.Matrix {
+	padding: 15px;
+	width: 40%;
+	height: 400px;
+	overflow-x: scroll;
+	overflow-y: scroll;
+	display: inline;
+	border: 1px solid white;
+}
+
+.Range {
+	margin-top: 700px;
+	margin: auto;
+	width: 50%;
+}
