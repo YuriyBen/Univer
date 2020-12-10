@@ -7,6 +7,10 @@
 	overflow-y: auto;
 }
 
+.HomePage input {
+	width: 250px;
+}
+
 .HomePage h1 {
 	margin: 0px;
 	font-size: large;

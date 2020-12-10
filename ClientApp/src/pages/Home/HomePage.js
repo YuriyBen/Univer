@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 import * as actionTypes from "../../store/actions/actionTypes";
 import Matrix from "../../components/Matrix/Matrix";
 import axios from "axios";
+import cookies from "universal-cookie";
+import Cookies from "universal-cookie";
 
 class HomePage extends Component {
 	state = {
@@ -65,12 +67,17 @@ class HomePage extends Component {
 	};
 
 	claculate = () => {
-		const matrix = {
-			matrix1: this.state.matrix1,
-			matrix2: this.state.matrix2,
-		};
+		const Cookies = new cookies();
 		axios
-			.post("/", matrix)
+			.post(
+				"/",
+				{ userId: this.props.userId, matrix1: this.state.firstMatrix, matrix2: this.state.secondMatrix },
+				{
+					headers: {
+						Authorization: Cookies.get("accessToken"),
+					},
+				}
+			)
 			.then(response => {
 				console.log(response);
 			})
@@ -167,6 +174,7 @@ const mapStateToProps = state => {
 	return {
 		userName: state.userName,
 		isAuthenticated: state.isAuthenticated,
+		userId: state.userId,
 	};
 };
 

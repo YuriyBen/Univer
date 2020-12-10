@@ -1,5 +1,7 @@
 .Matrix {
-	border: 1px solid white;
+	padding: 5px;
+	box-sizing: border-box;
+	border: 3px dotted white;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-around;
