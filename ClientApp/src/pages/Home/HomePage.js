@@ -5,7 +5,6 @@ import * as actionTypes from "../../store/actions/actionTypes";
 import Matrix from "../../components/Matrix/Matrix";
 import axios from "axios";
 import cookies from "universal-cookie";
-import Cookies from "universal-cookie";
 
 class HomePage extends Component {
 	state = {
@@ -49,11 +48,7 @@ class HomePage extends Component {
 				firstMatrix.push([]);
 				for (let b = 0; b < this.state.matrix1C; ++b) {
 					firstMatrix[a].push(
-						Math.round(
-							Math.random() *
-								(+this.state.rangeMax - +this.state.rangeMin) +
-								+this.state.rangeMin
-						)
+						Math.round(Math.random() * (+this.state.rangeMax - +this.state.rangeMin) + +this.state.rangeMin)
 					);
 				}
 			}
@@ -63,11 +58,7 @@ class HomePage extends Component {
 				secondMatrix.push([]);
 				for (let b = 0; b < this.state.matrix2C; ++b) {
 					secondMatrix[a].push(
-						Math.round(
-							Math.random() *
-								(+this.state.rangeMax - +this.state.rangeMin) +
-								+this.state.rangeMin
-						)
+						Math.round(Math.random() * (+this.state.rangeMax - +this.state.rangeMin) + +this.state.rangeMin)
 					);
 				}
 			}
@@ -98,10 +89,10 @@ class HomePage extends Component {
 					},
 				}
 			)
-			.then((response) => {
+			.then(response => {
 				console.log(response);
 			})
-			.catch((error) => {
+			.catch(error => {
 				console.log(error);
 			});
 	};
@@ -109,10 +100,7 @@ class HomePage extends Component {
 	render() {
 		return (
 			<div className={styles.HomePage}>
-				<div>
-					WELCOME, {this.props.userName}, WANNA MULYIPLY SOME
-					MATRIXES?
-				</div>
+				<div>WELCOME, {this.props.userName}, WANNA MULYIPLY SOME MATRIXES?</div>
 				<button onClick={this.props.logout}>LOG OUT</button>
 				<div className={styles.Range}>
 					<div>RANGE OF MATRIX ELEMENTS VALUES</div>
@@ -120,7 +108,7 @@ class HomePage extends Component {
 						placeholder="from"
 						type="number"
 						value={this.state.rangeMin}
-						onChange={(event) => {
+						onChange={event => {
 							this.setState(
 								{
 									rangeMin: event.target.value,
@@ -134,7 +122,7 @@ class HomePage extends Component {
 						placeholder="to"
 						type="number"
 						value={this.state.rangeMax}
-						onChange={(event) => {
+						onChange={event => {
 							this.setState(
 								{
 									rangeMax: event.target.value,
@@ -148,12 +136,11 @@ class HomePage extends Component {
 						<button
 							disabled={!this.state.enabledGenerate}
 							style={{ margin: "15px" }}
-							onClick={this.generate}>
+							onClick={this.generate}
+						>
 							GENERATE
 						</button>
-						<button
-							disabled={!this.state.enableCalculate}
-							style={{ margin: "15px" }}>
+						<button disabled={!this.state.enableCalculate} style={{ margin: "15px" }}>
 							MULTIPLY
 						</button>
 					</div>
@@ -165,7 +152,7 @@ class HomePage extends Component {
 							placeholder="column"
 							type="number"
 							value={this.state.matrix1C}
-							onChange={(event) => {
+							onChange={event => {
 								this.setState(
 									{
 										matrix1C: event.target.value,
@@ -180,7 +167,7 @@ class HomePage extends Component {
 							placeholder="row"
 							type="number"
 							value={this.state.matrix1R}
-							onChange={(event) => {
+							onChange={event => {
 								this.setState(
 									{
 										matrix1R: event.target.value,
@@ -200,7 +187,7 @@ class HomePage extends Component {
 							placeholder="column"
 							type="number"
 							value={this.state.matrix2C}
-							onChange={(event) => {
+							onChange={event => {
 								this.setState(
 									{
 										matrix2C: event.target.value,
@@ -210,12 +197,7 @@ class HomePage extends Component {
 								);
 							}}
 						/>
-						<input
-							placeholder="row"
-							type="number"
-							value={this.state.matrix1C}
-							onChange={() => {}}
-						/>
+						<input placeholder="row" type="number" value={this.state.matrix1C} onChange={() => {}} />
 					</div>
 					<Matrix source={this.state.secondMatrix} />{" "}
 				</div>
@@ -224,7 +206,7 @@ class HomePage extends Component {
 	}
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
 	return {
 		userName: state.userName,
 		isAuthenticated: state.isAuthenticated,
@@ -232,7 +214,7 @@ const mapStateToProps = (state) => {
 	};
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
 	return {
 		logout: () => {
 			dispatch({ type: actionTypes.LOG_OUT });

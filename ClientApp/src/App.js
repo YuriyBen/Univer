@@ -6,6 +6,7 @@ import * as actionTypes from "./store/actions/actionTypes";
 
 import LandingPage from "./pages/Landing/LandingPage";
 import HomePage from "./pages/Home/HomePage";
+import AdminPage from "./pages/Admin/AdminPage";
 
 class App extends React.Component {
 	componentDidMount() {
@@ -17,10 +18,17 @@ class App extends React.Component {
 			<React.Fragment>
 				<Switch>
 					{this.props.isAuthenticated ? (
-						<React.Fragment>
-							<Route exact path="/home" component={HomePage} />
-							<Redirect to="/home" />
-						</React.Fragment>
+						this.props.userName === " Admin" ? (
+							<React.Fragment>
+								<Route exact path="/admin" component={AdminPage} />
+								<Redirect to="/admin" />
+							</React.Fragment>
+						) : (
+							<React.Fragment>
+								<Route exact path="/home" component={HomePage} />
+								<Redirect to="/home" />
+							</React.Fragment>
+						)
 					) : (
 						<React.Fragment>
 							<Route exact path="/" component={LandingPage} />
@@ -36,6 +44,7 @@ class App extends React.Component {
 const mapStateToProps = state => {
 	return {
 		isAuthenticated: state.isAuthenticated,
+		userName: state.userName,
 	};
 };
 

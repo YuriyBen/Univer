@@ -25,12 +25,11 @@ button {
 
 button:enabled:hover {
 	background-color: #3b55ff;
-	color: rgb(47, 255, 5);
+	box-shadow: 3px 3px 0px black;
 }
 
 button:disabled {
 	background-color: #06157a;
-	color: rgba(135, 93, 233, 0.445);
 }
 
 .Matrix {
