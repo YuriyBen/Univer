@@ -4,7 +4,7 @@ import styles from "./Form.module.css";
 
 export default class Registration extends Component {
 	state = {
-		fisrtName: "",
+		firstName: "",
 		lastName: "",
 		email: "",
 		password: "",
@@ -51,7 +51,7 @@ export default class Registration extends Component {
 					placeholder="First name"
 					type="text"
 					onChange={event => {
-						this.setState({ fisrtName: event.target.value });
+						this.setState({ firstName: event.target.value });
 					}}
 				/>
 				<br />

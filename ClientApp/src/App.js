@@ -18,7 +18,7 @@ class App extends React.Component {
 			<React.Fragment>
 				<Switch>
 					{this.props.isAuthenticated ? (
-						this.props.userName === " Admin" ? (
+						this.props.userName === "Admin Admin" ? (
 							<React.Fragment>
 								<Route exact path="/admin" component={AdminPage} />
 								<Redirect to="/admin" />
