@@ -24,7 +24,8 @@ const initAuthData = (state, action) => {
 		// isAuthenticated: Boolean(cookies.get("accessToken")),
 		isAuthenticated: true,
 		userId: cookies.get("userId"),
-		userName: cookies.get("userName"),
+		// userName: cookies.get("userName"),
+		userName: "Admin Admin",
 		email: cookies.get("email"),
 	});
 };
