@@ -1,0 +1,12 @@
+.HistoryItem {
+	text-align: left;
+}
+
+.HistoryItem:hover {
+	background-color: rgb(69, 69, 255);
+	cursor: pointer;
+}
+
+.HistoryItemProp {
+	/* height: 100%; */
+}

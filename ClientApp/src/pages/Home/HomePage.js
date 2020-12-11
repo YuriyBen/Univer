@@ -5,6 +5,7 @@ import * as actionTypes from "../../store/actions/actionTypes";
 import Matrix from "../../components/Matrix/Matrix";
 import axios from "axios";
 import cookies from "universal-cookie";
+import HistoryItem from "../../components/HistoryItem/HistoryItem";
 
 class HomePage extends Component {
 	state = {
@@ -18,6 +19,11 @@ class HomePage extends Component {
 		enableCalculate: false,
 		firstMatrix: [],
 		secondMatrix: [],
+		historyItems: [
+			{ id: "123", date: "12.11.2020", matrixSizes: "30x40", status: "done", result: "123" },
+			{ id: "234", date: "10.12.2020", matrixSizes: "12x45", status: "cancelled", result: "321" },
+			{ id: "345", date: "01.10.2020", matrixSizes: "32x4", status: "processing", result: "213" },
+		],
 	};
 
 	enabledC = () => {
@@ -65,11 +71,9 @@ class HomePage extends Component {
 
 			this.setState({
 				enableCalculate: true,
-				enabledGenerate: false,
 				firstMatrix: firstMatrix,
 				secondMatrix: secondMatrix,
 			});
-			console.log(firstMatrix);
 		});
 	};
 
@@ -140,7 +144,11 @@ class HomePage extends Component {
 						>
 							GENERATE
 						</button>
-						<button disabled={!this.state.enableCalculate} style={{ margin: "15px" }}>
+						<button
+							disabled={!this.state.enableCalculate}
+							style={{ margin: "15px" }}
+							onClick={this.claculate}
+						>
 							MULTIPLY
 						</button>
 					</div>
@@ -201,6 +209,24 @@ class HomePage extends Component {
 					</div>
 					<Matrix source={this.state.secondMatrix} />{" "}
 				</div>
+				<h1>HISTORY</h1>
+				<table className={styles.History}>
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>DATE</th>
+							<th>SIZE</th>
+							<th>STATUS</th>
+							<th>RESULT</th>
+						</tr>
+					</thead>
+
+					<tbody>
+						{this.state.historyItems.map((historyItem, index) => (
+							<HistoryItem source={historyItem} key={index} />
+						))}
+					</tbody>
+				</table>
 			</div>
 		);
 	}

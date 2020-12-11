@@ -1,4 +1,5 @@
 .HomePage {
+	text-align: center;
 	width: 100%;
 	height: 100%;
 	background-color: #06157a;
@@ -48,6 +49,7 @@ button:disabled {
 }
 
 .MatrixHolder {
+	margin-bottom: 30px;
 	vertical-align: top;
 	padding: 3px;
 	width: 50%;
@@ -64,4 +66,14 @@ button:disabled {
 
 .Matrix::-webkit-scrollbar {
 	display: none;
+}
+
+.History {
+	width: 85%;
+	margin: 20px auto;
+}
+
+.HomePage th {
+	text-align: left;
+	border-bottom: 1px dashed white;
 }
