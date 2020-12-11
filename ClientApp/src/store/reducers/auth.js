@@ -21,21 +21,34 @@ export const clearCookies = () => {
 
 const initAuthData = (state, action) => {
 	return updateObject(state, {
-		isAuthenticated: Boolean(cookies.get("accessToken")),
+		// isAuthenticated: Boolean(cookies.get("accessToken")),
+		isAuthenticated: true,
 		userId: cookies.get("userId"),
-		userName: cookies.get("userName"),
+		// userName: cookies.get("userName"),
+		userName: "Admin Admin",
 		email: cookies.get("email"),
 	});
 };
 
 const setAuthData = (state, action) => {
 	clearCookies();
-	const expires = new Date(new Date().getTime() + 10 * 365 * 24 * 60 * 60 * 1000);
+	const expires = new Date(
+		new Date().getTime() + 10 * 365 * 24 * 60 * 60 * 1000
+	);
 
-	cookies.set("accessToken", action.authData.accessToken, { expires, path: "/" });
-	cookies.set("refreshToken", action.authData.refreshToken, { expires, path: "/" });
+	cookies.set("accessToken", action.authData.accessToken, {
+		expires,
+		path: "/",
+	});
+	cookies.set("refreshToken", action.authData.refreshToken, {
+		expires,
+		path: "/",
+	});
 	cookies.set("userId", action.authData.user.id, { expires, path: "/" });
-	cookies.set("userName", action.authData.user.userName, { expires, path: "/" });
+	cookies.set("userName", action.authData.user.userName, {
+		expires,
+		path: "/",
+	});
 	cookies.set("email", action.authData.user.email, { expires, path: "/" });
 
 	return updateObject(state, {

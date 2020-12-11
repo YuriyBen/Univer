@@ -9,20 +9,20 @@ class Login extends Component {
 		password: "",
 		login: "",
 		loading: false,
+		errorMessage: "",
 	};
 
 	login = () => {
 		this.setState({ loading: true });
-		console.log(this.state);
 		axios
 			.post("https://localhost:44326/api/login", { email: this.state.login, password: this.state.password })
 			.then(result => {
-				this.props.setAuthData(result.data.data);
 				this.setState({ loading: false });
-			})
-			.catch(error => {
-				console.error(error);
-				this.setState({ loading: false });
+				if (result.data.status === 0) {
+					this.props.setAuthData(result.data.data);
+				} else {
+					this.setState({ errorMessage: result.data.data });
+				}
 			});
 	};
 
@@ -40,7 +40,7 @@ class Login extends Component {
 					placeholder="E-mail"
 					type="text"
 					onChange={event => {
-						this.setState({ login: event.target.value });
+						this.setState({ login: event.target.value, errorMessage: "" });
 					}}
 				/>
 				<br />
@@ -48,9 +48,11 @@ class Login extends Component {
 					placeholder="Password"
 					type="password"
 					onChange={event => {
-						this.setState({ password: event.target.value });
+						this.setState({ password: event.target.value, errorMessage: "" });
 					}}
 				/>
+				<br />
+				<label className={styles.errorMessage}>{this.state.errorMessage}</label>
 				<br />
 				<button disabled={this.isButtonDisabled()} onClick={this.login}>
 					OK

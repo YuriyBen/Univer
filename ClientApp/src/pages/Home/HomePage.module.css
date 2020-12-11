@@ -1,12 +1,88 @@
 .HomePage {
+	text-align: center;
 	width: 100%;
 	height: 100%;
 	background-color: #06157a;
 	padding: 10px;
 	box-sizing: border-box;
+	overflow-y: auto;
+}
+
+.HomePage input {
+	width: 250px;
 }
 
 .HomePage h1 {
 	margin: 0px;
 	font-size: large;
+}
+
+.HomePage h5 {
+	text-decoration: underline;
+}
+
+.HomePage h5:hover {
+	cursor: pointer;
+	color: rgb(69, 69, 255);
+}
+
+button {
+	background-color: #0822c7;
+	color: rgba(255, 255, 255, 0.658);
+	width: 150px;
+	height: 40px;
+}
+
+button:enabled:hover {
+	background-color: #3b55ff;
+	box-shadow: 3px 3px 0px black;
+}
+
+button:disabled {
+	background-color: #06157a;
+}
+
+.Matrix {
+	margin: 10px auto;
+	width: 80%;
+
+	overflow-x: scroll;
+	overflow-y: scroll;
+
+	border: 1px solid white;
+}
+
+.Range {
+	width: 100%;
+	text-align: center;
+}
+
+.MatrixHolder {
+	margin-bottom: 30px;
+	vertical-align: top;
+	padding: 3px;
+	width: 50%;
+	display: inline-block;
+	box-sizing: border-box;
+	height: fit-content;
+}
+
+.InputHolder {
+	text-align: center;
+	width: 100%;
+	display: block;
+}
+
+.Matrix::-webkit-scrollbar {
+	display: none;
+}
+
+.History {
+	width: 85%;
+	margin: 20px auto;
+}
+
+.HomePage th {
+	text-align: left;
+	border-bottom: 1px dashed white;
 }
