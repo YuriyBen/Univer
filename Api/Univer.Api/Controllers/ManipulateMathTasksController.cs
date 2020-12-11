@@ -27,7 +27,6 @@ namespace Univer.Api.Controllers
         [HttpPost("math-task")]
         public async Task<ActionResult> MatrixMultiply([FromBody] MatrixMultiplyRequest matrixMultiplyRequest, CancellationToken cancellationToken) 
         {
-
             object result = await _mathService.MatrixMultiply(matrixMultiplyRequest: matrixMultiplyRequest, cancellationToken: cancellationToken);
 
             return new JsonResult(result);

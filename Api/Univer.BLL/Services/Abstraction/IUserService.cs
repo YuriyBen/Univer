@@ -11,7 +11,7 @@ namespace Univer.BLL.Services
         Task<object> Register(Register register);
         Task<object> Login(Login login);
         object RefreshToken(RefreshTokenRequest refreshTokenRequest);
-        (string AccessToken, string RefreshToken) GenerateJWT_Tokens(int userId);
+        //(string AccessToken, string RefreshToken) GenerateJWT_Tokens(int userId);
         object GetMyHistory(SimpleIdRequest simpleIdRequest);
     }
 }

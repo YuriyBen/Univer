@@ -15,6 +15,7 @@ namespace Univer.DAL.Models
         TokenIsValid = 100,
         LimitOfExecutableTasks = 101,
         UnexpectedServerError = 102,
+        UnverifiedUser = 103,
 
     }
 }

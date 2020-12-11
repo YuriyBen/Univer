@@ -37,7 +37,7 @@ namespace Univer.BLL.Services
 
                 if (user != null)
                 {
-                    return new ResponseBase<string> { Status = ResponeStatusCodes.UserAlreayExists, Data = $"Ooops. {ErrorMessages.UserAlreayExists}" };
+                    return new ResponseBase<string> { Status = ResponeStatusCodes.UserAlreayExists, Data = ErrorMessages.UserAlreayExists };
                 }
 
                 user = new User { Email = register.Email, PasswordHash = register.Password.HashPassword() };
@@ -73,9 +73,14 @@ namespace Univer.BLL.Services
                     return new ResponseBase<string> { Status = ResponeStatusCodes.InvalidLoginOrPassword, Data = ErrorMessages.InvalidLoginOrPassword };
                 }
 
+                //if(user.Role == RoleType.Unverified)
+                //{
+                //    return new ResponseBase<string> { Status = ResponeStatusCodes.UnverifiedUser, Data = ErrorMessages.UnverifiedUser };
+                //}
+
                 user.UserPublicData = _context.UsersPublicData.FirstOrDefault(userData => userData.UserId == user.Id);
 
-                (string accessToken, string refreshToken) = this.GenerateJWT_Tokens(user.Id);
+                (string accessToken, string refreshToken) = this.GenerateJWT_Tokens(userId: user.Id, userRole: user.Role);
 
                 return new ResponseBase<LoginResponse> { Data = new LoginResponse { AccessToken = accessToken, RefreshToken = refreshToken, User = new UserDTO { Id = user.Id, Email = user.Email, UserName = user.UserPublicData.UserName } } };
             }
@@ -96,13 +101,15 @@ namespace Univer.BLL.Services
 
                 int userIdFromToken = Int32.Parse(decodedTokenData.Claims.FirstOrDefault(x => x.Type == "unique_name").Value);
 
+                string userRole = decodedTokenData.Claims.FirstOrDefault(x => x.Type == "role").Value;
+
 
                 DateTime validTo = decodedTokenData.ValidTo;
                 DateTime now = DateTime.Now;
 
                 if (decodedTokenData.ValidTo <= DateTime.Now)
                 {
-                    (string accessToken, string refreshToken) = this.GenerateJWT_Tokens(userId: userIdFromToken);
+                    (string accessToken, string refreshToken) = this.GenerateJWT_Tokens(userId: userIdFromToken, userRole: userRole);
                     return new ResponseBase<RefreshTokenResponse> { Data = new RefreshTokenResponse { AccessToken = accessToken, RefreshToken = refreshToken } };
                 }
                 else
@@ -118,10 +125,10 @@ namespace Univer.BLL.Services
             }
         }
 
-        public (string AccessToken, string RefreshToken) GenerateJWT_Tokens(int userId)
+        private (string AccessToken, string RefreshToken) GenerateJWT_Tokens(int userId, string userRole)
         {
-            string accessToken = JWT_Helper.GenerateJWT(secretKey: this._appSettings.JWT_SecretKey, userId: userId, expiresInHours: AccessTokenExpiresInHours);
-            string refreshToken = JWT_Helper.GenerateJWT(secretKey: this._appSettings.JWT_SecretKey, userId: userId, expiresInHours: RefreshTokenExpiresInHours);
+            string accessToken = JWT_Helper.GenerateJWT(secretKey: this._appSettings.JWT_SecretKey, userId: userId, role: userRole, expiresInHours: AccessTokenExpiresInHours);
+            string refreshToken = JWT_Helper.GenerateJWT(secretKey: this._appSettings.JWT_SecretKey, userId: userId, role: userRole, expiresInHours: RefreshTokenExpiresInHours);
 
             return (AccessToken: accessToken, RefreshToken: refreshToken);
         }
