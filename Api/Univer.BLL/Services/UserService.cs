@@ -144,7 +144,7 @@ namespace Univer.BLL.Services
                            new HistoryDTO
                             {
                                 Id = history.Id,
-                                Date = history.Date,
+                                Date = history.Date.ToShortDateString(),
                                 MatrixSizes = history.MatrixSizes,
                                 Result = history.Result,
                                 IsCurrentlyExecuted = history.IsCurrentlyExecuted,

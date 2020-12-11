@@ -127,7 +127,7 @@ namespace Univer.BLL.Services
 
         private async Task<History> AddMathResultToDb(int result, int userPublicDataId, string formattedMatrixSize, bool isBeingExecuted = false)
         {
-			History history =  this._context.History.Add(new History { Date = DateTime.Now, UserPublicDataId = userPublicDataId, Result = result, MatrixSizes = formattedMatrixSize, IsCurrentlyExecuted = isBeingExecuted }).Entity;
+			History history =  this._context.History.Add(new History { Date = DateTime.Now.Date, UserPublicDataId = userPublicDataId, Result = result, MatrixSizes = formattedMatrixSize, IsCurrentlyExecuted = isBeingExecuted }).Entity;
 
 			await this._context.SaveChangesAsync();
 			return history;
