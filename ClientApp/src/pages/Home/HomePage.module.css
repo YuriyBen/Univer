@@ -17,6 +17,15 @@
 	font-size: large;
 }
 
+.HomePage h5 {
+	text-decoration: underline;
+}
+
+.HomePage h5:hover {
+	cursor: pointer;
+	color: rgb(69, 69, 255);
+}
+
 button {
 	background-color: #0822c7;
 	color: rgba(255, 255, 255, 0.658);

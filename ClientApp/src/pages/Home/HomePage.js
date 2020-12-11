@@ -104,8 +104,10 @@ class HomePage extends Component {
 	render() {
 		return (
 			<div className={styles.HomePage}>
-				<div>WELCOME, {this.props.userName}, WANNA MULYIPLY SOME MATRIXES?</div>
-				<button onClick={this.props.logout}>LOG OUT</button>
+				<div className={styles.PageHeader}>
+					<div>WELCOME, {this.props.userName}, WANNA MULTIPLY SOME MATRIXES?</div>
+					<h5 onClick={this.props.logout}>CLICK HERE TO LOG OUT</h5>
+				</div>
 				<div className={styles.Range}>
 					<div>RANGE OF MATRIX ELEMENTS VALUES</div>
 					<input
@@ -234,7 +236,7 @@ class HomePage extends Component {
 
 const mapStateToProps = state => {
 	return {
-		userName: state.userName,
+		userName: state.userName.split(" ")[0],
 		isAuthenticated: state.isAuthenticated,
 		userId: state.userId,
 	};
