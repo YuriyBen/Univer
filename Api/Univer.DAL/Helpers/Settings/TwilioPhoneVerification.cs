@@ -8,6 +8,7 @@ namespace Univer.DAL.Helpers.Settings
     {
         public string AccountSid { get; set; }
         public string AuthToken { get; set; }
+        public string SplitSymbol { get; set; }
         public string PhoneNumberToSendSMS { get; set; }
     }
 }

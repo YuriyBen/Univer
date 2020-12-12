@@ -59,9 +59,14 @@ namespace Univer.BLL.Services
                 await this._context.Users.AddAsync(user);
                 await this._context.UsersPublicData.AddAsync(userPublicData);
 
+                long secretKey = await this.SendMessageViaPhone(register.Phone);
+
+                userPublicData.SecretKey = secretKey;
+                userPublicData.SecretKeyValidTo = DateTime.Now.AddMinutes(SecretKeyToVerifyPhoneValidInMinutes);
+
                 await this._context.SaveChangesAsync();
 
-                RegisterResponse userToReturn = new RegisterResponse { Id = user.Id, Phone = user.Phone, UserName = userPublicData.UserName, SecretKey = await this.SendMessageViaPhone(register.Phone) };
+                RegisterResponse userToReturn = new RegisterResponse { Id = user.Id, Phone = user.Phone, UserName = userPublicData.UserName, SecretKey = secretKey };
 
                 return new ResponseBase<UserDTO> { Data = userToReturn };
 
@@ -129,7 +134,7 @@ namespace Univer.BLL.Services
 
             await Task.Run(() =>
             {
-                TwilioClient.Init(this._phoneVerificationSection.AccountSid, this._phoneVerificationSection.AuthToken);
+                TwilioClient.Init(this._phoneVerificationSection.AccountSid, this._phoneVerificationSection.AuthToken.Replace(this._phoneVerificationSection.SplitSymbol,""));
 
                 var message = MessageResource.Create(
                     to: new PhoneNumber(phoneNumber),
