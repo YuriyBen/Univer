@@ -9,6 +9,7 @@ namespace Univer.BLL.Services
     public interface IUserService
     {
         Task<object> Register(Register register);
+        Task<object> Verification(PhoneVerificationRequest verificationRequest);
         Task<object> Login(Login login);
         object RefreshToken(RefreshTokenRequest refreshTokenRequest);
         //(string AccessToken, string RefreshToken) GenerateJWT_Tokens(int userId);

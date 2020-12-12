@@ -12,6 +12,7 @@ using Microsoft.IdentityModel.Tokens;
 using Univer.BLL.Services;
 using Univer.DAL;
 using Univer.DAL.Helpers;
+using Univer.DAL.Helpers.Settings;
 
 namespace Univer.Api
 {
@@ -43,6 +44,9 @@ namespace Univer.Api
             var appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
 
+            var phoneVerificationSection = Configuration.GetSection("TwilioPhoneVerification");
+            services.Configure<TwilioPhoneVerification>(phoneVerificationSection);
+
             #region JWT_Configuration
             var appSettings = appSettingsSection.Get<AppSettings>();
             var key = Encoding.ASCII.GetBytes(appSettings.JWT_SecretKey);
@@ -70,6 +74,7 @@ namespace Univer.Api
 
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IMathService, MathService>();
+            services.AddScoped<IAdminService, AdminService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

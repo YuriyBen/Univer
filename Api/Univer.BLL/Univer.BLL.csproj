@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.8.0" />
+    <PackageReference Include="Twilio" Version="5.52.0" />
   </ItemGroup>
 
   <ItemGroup>

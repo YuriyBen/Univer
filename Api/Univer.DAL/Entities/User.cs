@@ -8,7 +8,7 @@ namespace Univer.DAL.Entities
     public class User
     {
         public int Id { get; set; } = 0;
-        public string Email { get; set; }
+        public string Phone { get; set; }
         //public string Phone { get; set; } //TODO confirm yourself by phone?
         public string PasswordHash { get; set; }
         public string Role { get; set; } = RoleType.Unverified;
@@ -17,4 +17,5 @@ namespace Univer.DAL.Entities
         public virtual UserPublicData UserPublicData { get; set; }
 
     }
+    
 }

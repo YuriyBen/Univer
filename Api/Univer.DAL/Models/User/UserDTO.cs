@@ -7,8 +7,13 @@ namespace Univer.DAL.Models
     public class UserDTO
     {
         public int Id { get; set; } = 0;
-        public string Email { get; set; }
+        public string Phone { get; set; }
         public string UserName { get; set; }
 
+    }
+
+    public class RegisterResponse: UserDTO
+    {
+        public long SecretKey { get; set; }
     }
 }

@@ -4,10 +4,10 @@ using System.Text;
 
 namespace Univer.DAL.Models
 {
-    public static class ErrorMessages
+    public static class ResponseMessages
     {
-        public const string InvalidLoginOrPassword = "Oops..Invalid email or password";
-        public const string UserAlreayExists = "Oops..User with same email already exists";
+        public const string InvalidLoginOrPassword = "Oops..Invalid phone number or password";
+        public const string UserAlreayExists = "Oops..User with same phone number already exists";
         public const string TokenIsValid = "Token is valid yet";
         public const string RequestIsCanceled = "Request has been canceled..";
 
@@ -15,6 +15,11 @@ namespace Univer.DAL.Models
         public const string LimitOfExecutableTasks = "Amount of executable tasks is overflow. Please, try again later.";
 
         public const string UnverifiedUser = "Sorry..You have not verified yourself.";
+        public const string BadVerificationSecretKey = "It seems your secret key is not valid.Please, try again.";
+
+
+        public const string VerifiedUser = "You have verified yourself";
+        public const string RepeatedVerification = "New secret key was sent to your phone. Please, try again with new key.";
 
     }
 }

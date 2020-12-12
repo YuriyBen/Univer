@@ -32,6 +32,13 @@ namespace Univer.Api.Controllers
             return new JsonResult(result);
         }
 
+        [HttpPost("verification")]
+        public async Task<ActionResult> Verification([FromBody] PhoneVerificationRequest verificationRequest)
+        {
+            var result = await _userService.Verification(verificationRequest: verificationRequest);
+
+            return new JsonResult(result); 
+        }
 
         [HttpPost("login")]
         public async Task<ActionResult> Login([FromBody] Login loginRequest)
@@ -50,7 +57,7 @@ namespace Univer.Api.Controllers
         }
 
         [HttpGet("account/history")]
-        //[Authorize]
+        [Authorize]
         public ActionResult GetHistory([FromBody] SimpleIdRequest simpleIdRequest)
         {
 

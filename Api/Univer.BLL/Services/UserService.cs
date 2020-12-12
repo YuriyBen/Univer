@@ -13,6 +13,10 @@ using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Univer.DAL.Models.Account;
+using Twilio;
+using Twilio.Types;
+using Twilio.Rest.Api.V2010.Account;
+using Univer.DAL.Helpers.Settings;
 
 namespace Univer.BLL.Services
 {
@@ -20,27 +24,34 @@ namespace Univer.BLL.Services
     {
         private const int AccessTokenExpiresInHours = 4;
         private const int RefreshTokenExpiresInHours = 7;
+        private const double SecretKeyToVerifyPhoneValidInMinutes = 5;
         private readonly AppDbContext _context;
+        private readonly TwilioPhoneVerification _phoneVerificationSection;
         private readonly AppSettings _appSettings;
 
-        public UserService(AppDbContext context, IOptions<AppSettings> appSettings)
+        public UserService(AppDbContext context, IOptions<AppSettings> appSettings, IOptions<TwilioPhoneVerification> phoneVerificationSection)
         {
             this._context = context;
+            this._phoneVerificationSection = phoneVerificationSection.Value;
             this._appSettings = appSettings.Value;
         }
 
+        
         public async Task<object> Register(Register register)
         {
             try
             {
-                User user = this._context.Users.FirstOrDefault(user => user.Email == register.Email);
+                register.Phone = register.Phone.Trim()[0] == '+' ? register.Phone.Trim() : $"+{register.Phone.Trim()}";
+
+                User user = this._context.Users.FirstOrDefault(user => user.Phone == register.Phone);
 
                 if (user != null)
                 {
-                    return new ResponseBase<string> { Status = ResponeStatusCodes.UserAlreayExists, Data = ErrorMessages.UserAlreayExists };
+                    return new ResponseBase<string> { Status = ResponeStatusCodes.UserAlreayExists, Data = ResponseMessages.UserAlreayExists };
                 }
 
-                user = new User { Email = register.Email, PasswordHash = register.Password.HashPassword() };
+
+                user = new User { Phone = register.Phone, PasswordHash = register.Password.HashPassword() };
 
 
                 UserPublicData userPublicData = new UserPublicData { User = user, UserName = $"{register.FirstName} {register.LastName}" };
@@ -50,7 +61,7 @@ namespace Univer.BLL.Services
 
                 await this._context.SaveChangesAsync();
 
-                UserDTO userToReturn = new UserDTO { Id = user.Id, Email = user.Email, UserName = userPublicData.UserName };
+                RegisterResponse userToReturn = new RegisterResponse { Id = user.Id, Phone = user.Phone, UserName = userPublicData.UserName, SecretKey = await this.SendMessageViaPhone(register.Phone) };
 
                 return new ResponseBase<UserDTO> { Data = userToReturn };
 
@@ -62,27 +73,99 @@ namespace Univer.BLL.Services
             }
         }
 
+        public async Task<object> Verification(PhoneVerificationRequest verificationRequest)
+        {
+            try
+            {
+                User user = await this._context.Users.FirstOrDefaultAsync(user => user.Id == verificationRequest.UserId);
+
+                if (user.Role != RoleType.Unverified)
+                {
+                    return new ResponseBase<string> { Data = ResponseMessages.VerifiedUser };
+                }
+
+                UserPublicData userData = await this._context.UsersPublicData.FirstOrDefaultAsync(user => user.UserId == verificationRequest.UserId);
+
+                if (userData.SecretKey == verificationRequest.SecretKey && DateTime.Now < userData.SecretKeyValidTo )
+                {
+                    user.Role = RoleType.User;
+                    await this._context.SaveChangesAsync();
+
+                    return new ResponseBase<string> { Data = ResponseMessages.VerifiedUser };
+
+                }
+                else
+                {
+                    userData.UnsuccessfullyVerificationAttempts++;
+                    if (userData.UnsuccessfullyVerificationAttempts == 3)
+                    {
+                        userData.SecretKey = await this.SendMessageViaPhone(userData.User.Phone);
+                        userData.SecretKeyValidTo = DateTime.Now.AddMinutes(SecretKeyToVerifyPhoneValidInMinutes);
+                        userData.UnsuccessfullyVerificationAttempts = 0;
+
+                        await this._context.SaveChangesAsync();
+
+                        return new ResponseBase<string> { Status = ResponeStatusCodes.UnverifiedUser, Data = ResponseMessages.RepeatedVerification };
+
+                    }
+                    await this._context.SaveChangesAsync();
+                    return new ResponseBase<string> { Status = ResponeStatusCodes.BadRequest, Data = ResponseMessages.BadVerificationSecretKey };
+
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return new ResponseBase<string> { Status = ResponeStatusCodes.UnexpectedServerError, Data = $"Oops... {ex.Message}" };
+            }
+
+
+        }
+        private async Task<long> SendMessageViaPhone(string phoneNumber)
+        {
+            Random random = new Random();
+            long secretKey = random.Next(1000, 9999);
+
+            await Task.Run(() =>
+            {
+                TwilioClient.Init(this._phoneVerificationSection.AccountSid, this._phoneVerificationSection.AuthToken);
+
+                var message = MessageResource.Create(
+                    to: new PhoneNumber(phoneNumber),
+                    from: new PhoneNumber(this._phoneVerificationSection.PhoneNumberToSendSMS),
+                    body: $"\nDo not show it to anyone!\nYour secret key to verify yourself: {secretKey}");
+
+
+            });
+
+            return secretKey;
+        }
+
         public async Task<object> Login(Login login)
         {
             try
             {
-                User user = await _context.Users.FirstOrDefaultAsync(user => user.Email == login.Email);
+                User user = await _context.Users.FirstOrDefaultAsync(user => user.Phone == login.Phone);
 
                 if (user == null || !login.Password.CheckPasswordWithHash(user.PasswordHash).Verified)
                 {
-                    return new ResponseBase<string> { Status = ResponeStatusCodes.InvalidLoginOrPassword, Data = ErrorMessages.InvalidLoginOrPassword };
+                    return new ResponseBase<string> { Status = ResponeStatusCodes.InvalidLoginOrPassword, Data = ResponseMessages.InvalidLoginOrPassword };
                 }
 
-                //if(user.Role == RoleType.Unverified)
-                //{
-                //    return new ResponseBase<string> { Status = ResponeStatusCodes.UnverifiedUser, Data = ErrorMessages.UnverifiedUser };
-                //}
+
+
+
+                if (user.Role == RoleType.Unverified)
+                {
+                    return new ResponseBase<string> { Status = ResponeStatusCodes.UnverifiedUser, Data = ResponseMessages.UnverifiedUser };
+                }
 
                 user.UserPublicData = _context.UsersPublicData.FirstOrDefault(userData => userData.UserId == user.Id);
 
                 (string accessToken, string refreshToken) = this.GenerateJWT_Tokens(userId: user.Id, userRole: user.Role);
 
-                return new ResponseBase<LoginResponse> { Data = new LoginResponse { AccessToken = accessToken, RefreshToken = refreshToken, User = new UserDTO { Id = user.Id, Email = user.Email, UserName = user.UserPublicData.UserName } } };
+                return new ResponseBase<LoginResponse> { Data = new LoginResponse { AccessToken = accessToken, RefreshToken = refreshToken, User = new UserDTO { Id = user.Id, Phone = user.Phone, UserName = user.UserPublicData.UserName } } };
             }
             catch (Exception ex)
             {
@@ -114,7 +197,7 @@ namespace Univer.BLL.Services
                 }
                 else
                 {
-                    return new ResponseBase<string> { Status = ResponeStatusCodes.TokenIsValid, Data = ErrorMessages.TokenIsValid };
+                    return new ResponseBase<string> { Status = ResponeStatusCodes.TokenIsValid, Data = ResponseMessages.TokenIsValid };
                 }
 
             }

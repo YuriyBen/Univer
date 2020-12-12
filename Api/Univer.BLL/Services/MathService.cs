@@ -55,7 +55,7 @@ namespace Univer.BLL.Services
 
 			if (columns_1 != rows_2)
 			{
-				return new ResponseBase<string> { Status = ResponeStatusCodes.BadRequest, Data = ErrorMessages.MatrixSizesEror };
+				return new ResponseBase<string> { Status = ResponeStatusCodes.BadRequest, Data = ResponseMessages.MatrixSizesEror };
 			}
 
 			try
@@ -66,7 +66,7 @@ namespace Univer.BLL.Services
 
 				if (amountOfSimultaneouslyExecutedTasks + 1 /*+1 means +1 thread for current task*/ > AmountOfSimulateniouslyExecutedTasks)
 				{
-					return new ResponseBase<string> { Status = ResponeStatusCodes.LimitOfExecutableTasks, Data = ErrorMessages.LimitOfExecutableTasks };
+					return new ResponseBase<string> { Status = ResponeStatusCodes.LimitOfExecutableTasks, Data = ResponseMessages.LimitOfExecutableTasks };
 				}
 
 				string formattedMatrixSizes = this.FormatMatrixSize(rows_1, columns_1, rows_2, columns_2);
@@ -127,7 +127,7 @@ namespace Univer.BLL.Services
 
         private async Task<History> AddMathResultToDb(int result, int userPublicDataId, string formattedMatrixSize, bool isBeingExecuted = false)
         {
-			History history =  this._context.History.Add(new History { Date = DateTime.Now.Date, UserPublicDataId = userPublicDataId, Result = result, MatrixSizes = formattedMatrixSize, IsCurrentlyExecuted = isBeingExecuted }).Entity;
+			History history =  this._context.History.Add(new History { Date = DateTime.Now, UserPublicDataId = userPublicDataId, Result = result, MatrixSizes = formattedMatrixSize, IsCurrentlyExecuted = isBeingExecuted }).Entity;
 
 			await this._context.SaveChangesAsync();
 			return history;

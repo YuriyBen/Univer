@@ -12,7 +12,7 @@ namespace Univer.DAL.Models
         [Required]
         public string LastName { get; set; }
         [Required]
-        public string Email { get; set; }
+        public string Phone { get; set; }
         [Required]
         public string Password { get; set; }
 
