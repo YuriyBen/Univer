@@ -15,8 +15,9 @@ namespace Univer.BLL.Services
 {
     public class MathService : IMathService
     {
-		private const int AmountOfSimulateniouslyExecutedTasks = 2;
-        private readonly AppDbContext _context;
+		private const int AmountOfSimulateniouslyExecutedUserTasks = 2;
+		private const int AmountOfSimulateniouslyExecutedTasks = 5;
+		private readonly AppDbContext _context;
 
         public MathService(AppDbContext context)
         {
@@ -52,11 +53,18 @@ namespace Univer.BLL.Services
 			{
 				int userPublicDataId = _context.UsersPublicData.FirstOrDefault(u => u.UserId == matrixMultiplyRequest.UserId).Id;
 
-				int amountOfSimultaneouslyExecutedTasks = await this._context.History.Where(item => item.UserPublicDataId == userPublicDataId && item.IsCurrentlyExecuted).CountAsync();
+				int amountOFAllExecutableTasks = await this._context.History.CountAsync(history => history.IsCurrentlyExecuted);
 
-				if (amountOfSimultaneouslyExecutedTasks + 1 /*+1 means +1 thread for current task*/ > AmountOfSimulateniouslyExecutedTasks)
+				if (amountOFAllExecutableTasks == AmountOfSimulateniouslyExecutedTasks)
 				{
 					return new ResponseBase<string> { Status = ResponeStatusCodes.LimitOfExecutableTasks, Data = ResponseMessages.LimitOfExecutableTasks };
+				}
+
+				int amountOfSimultaneouslyExecutedTasks = await this._context.History.Where(item => item.UserPublicDataId == userPublicDataId && item.IsCurrentlyExecuted).CountAsync();
+
+				if (amountOfSimultaneouslyExecutedTasks + 1 /*+1 means +1 thread for current task*/ > AmountOfSimulateniouslyExecutedUserTasks)
+				{
+					return new ResponseBase<string> { Status = ResponeStatusCodes.LimitOfExecutableTasks, Data = ResponseMessages.LimitOfExecutableTasksForUser };
 				}
 
 				string formattedMatrixSizes = this.FormatMatrixSize(rows_1, columns_1, rows_2, columns_2);

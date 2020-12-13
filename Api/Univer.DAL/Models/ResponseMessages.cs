@@ -12,7 +12,9 @@ namespace Univer.DAL.Models
         public const string RequestIsCanceled = "Request has been canceled..";
 
         public const string MatrixSizesEror = "Multiplication is not possible! The number of columns in the first matrix is ​​not equal to the number of rows in the second matrix.";
-        public const string LimitOfExecutableTasks = "Amount of executable tasks is overflow. Please, try again later.";
+        public const string LimitOfExecutableTasksForUser = "Amount of executable tasks is overflow. Please, try again later.";
+        public const string LimitOfExecutableTasks = "Oops... Server is overflow. Please, wait up to 1 min.";
+
 
         public const string UnverifiedUser = "Sorry..You have not verified yourself.";
         public const string BadVerificationSecretKey = "It seems your secret key is not valid.Please, try again.";
