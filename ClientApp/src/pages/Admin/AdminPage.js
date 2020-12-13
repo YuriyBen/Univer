@@ -40,7 +40,7 @@ class AdminPage extends Component {
 					<h5 onClick={this.props.logout}>CLICK HERE TO LOG OUT</h5>
 				</div>
 
-				<h1>REQUESTS IN PROCESS</h1>
+				<h1>GLOBAL HISTORY</h1>
 				<button onClick={this.getHistory}>REFRESH</button>
 				<table className={styles.History}>
 					<thead>
