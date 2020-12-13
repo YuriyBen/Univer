@@ -20,6 +20,12 @@ class HomePage extends Component {
 		firstMatrix: [],
 		secondMatrix: [],
 		historyItems: [],
+		cancellationTokenSource: null,
+	};
+
+	cancellRequests = () => {
+		this.state.cancellationTokenSource.cancel();
+		this.getHistory();
 	};
 
 	enabledC = () => {
@@ -50,11 +56,7 @@ class HomePage extends Component {
 				firstMatrix.push([]);
 				for (let b = 0; b < this.state.matrix1C; ++b) {
 					firstMatrix[a].push(
-						Math.round(
-							Math.random() *
-								(+this.state.rangeMax - +this.state.rangeMin) +
-								+this.state.rangeMin
-						)
+						Math.round(Math.random() * (+this.state.rangeMax - +this.state.rangeMin) + +this.state.rangeMin)
 					);
 				}
 			}
@@ -64,11 +66,7 @@ class HomePage extends Component {
 				secondMatrix.push([]);
 				for (let b = 0; b < this.state.matrix2C; ++b) {
 					secondMatrix[a].push(
-						Math.round(
-							Math.random() *
-								(+this.state.rangeMax - +this.state.rangeMin) +
-								+this.state.rangeMin
-						)
+						Math.round(Math.random() * (+this.state.rangeMax - +this.state.rangeMin) + +this.state.rangeMin)
 					);
 				}
 			}
@@ -83,6 +81,7 @@ class HomePage extends Component {
 
 	claculate = () => {
 		const Cookies = new cookies();
+		const cancellationTokenSource = axios.CancelToken.source();
 		axios
 			.post(
 				"https://localhost:44326/api/math-task",
@@ -95,36 +94,39 @@ class HomePage extends Component {
 					headers: {
 						Authorization: "Bearer " + Cookies.get("accessToken"),
 					},
+					cancelToken: cancellationTokenSource.token,
 				}
 			)
-			.then((response) => {
+			.then(response => {
 				this.getHistory();
 			})
-			.catch((error) => {
+			.catch(error => {
 				console.log(error);
 			});
 
-		setTimeout(this.getHistory, 500);
+		this.setState({ cancellationTokenSource });
+		setTimeout(this.getHistory, 1000);
 	};
+
+	// componentDidUpdate() {
+	// 	this.setState({ cancellationTokenSource: axios.CancelToken.source() });
+	// }
 
 	getHistory = () => {
 		const Cookies = new cookies();
 
 		axios
-			.get(
-				`https://localhost:44326/api/account/history?userId=${this.props.userId}`,
-				{
-					headers: {
-						Authorization: "Bearer " + Cookies.get("accessToken"),
-					},
-				}
-			)
-			.then((result) => {
+			.get(`https://localhost:44326/api/account/history?userId=${this.props.userId}`, {
+				headers: {
+					Authorization: "Bearer " + Cookies.get("accessToken"),
+				},
+			})
+			.then(result => {
 				if (result.data.status === 0) {
 					this.setState({ historyItems: result.data.data });
 				}
 			})
-			.catch((error) => {
+			.catch(error => {
 				console.error(error);
 			});
 	};
@@ -137,10 +139,7 @@ class HomePage extends Component {
 		return (
 			<div className={styles.HomePage}>
 				<div className={styles.PageHeader}>
-					<div>
-						WELCOME, {this.props.userName}, WANNA MULTIPLY SOME
-						MATRIXES?
-					</div>
+					<div>WELCOME, {this.props.userName}, WANNA MULTIPLY SOME MATRIXES?</div>
 					<h5 onClick={this.props.logout}>CLICK HERE TO LOG OUT</h5>
 				</div>
 				<div className={styles.Range}>
@@ -149,7 +148,7 @@ class HomePage extends Component {
 						placeholder="from"
 						type="number"
 						value={this.state.rangeMin}
-						onChange={(event) => {
+						onChange={event => {
 							this.setState(
 								{
 									rangeMin: event.target.value,
@@ -163,7 +162,7 @@ class HomePage extends Component {
 						placeholder="to"
 						type="number"
 						value={this.state.rangeMax}
-						onChange={(event) => {
+						onChange={event => {
 							this.setState(
 								{
 									rangeMax: event.target.value,
@@ -177,13 +176,15 @@ class HomePage extends Component {
 						<button
 							disabled={!this.state.enabledGenerate}
 							style={{ margin: "15px" }}
-							onClick={this.generate}>
+							onClick={this.generate}
+						>
 							GENERATE
 						</button>
 						<button
 							disabled={!this.state.enableCalculate}
 							style={{ margin: "15px" }}
-							onClick={this.claculate}>
+							onClick={this.claculate}
+						>
 							MULTIPLY
 						</button>
 					</div>
@@ -195,7 +196,7 @@ class HomePage extends Component {
 							placeholder="column"
 							type="number"
 							value={this.state.matrix1C}
-							onChange={(event) => {
+							onChange={event => {
 								this.setState(
 									{
 										matrix1C: event.target.value,
@@ -210,7 +211,7 @@ class HomePage extends Component {
 							placeholder="row"
 							type="number"
 							value={this.state.matrix1R}
-							onChange={(event) => {
+							onChange={event => {
 								this.setState(
 									{
 										matrix1R: event.target.value,
@@ -230,7 +231,7 @@ class HomePage extends Component {
 							placeholder="column"
 							type="number"
 							value={this.state.matrix2C}
-							onChange={(event) => {
+							onChange={event => {
 								this.setState(
 									{
 										matrix2C: event.target.value,
@@ -240,16 +241,12 @@ class HomePage extends Component {
 								);
 							}}
 						/>
-						<input
-							placeholder="row"
-							type="number"
-							value={this.state.matrix1C}
-							onChange={() => {}}
-						/>
+						<input placeholder="row" type="number" value={this.state.matrix1C} onChange={() => {}} />
 					</div>
 					<Matrix source={this.state.secondMatrix} />{" "}
 				</div>
 				<h1>HISTORY</h1>
+				<button onClick={this.cancellRequests}>CANCELL THE CALCULATION PROCESS</button>
 				<table className={styles.History}>
 					<thead>
 						<tr>
@@ -272,7 +269,7 @@ class HomePage extends Component {
 	}
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
 	return {
 		userName: state.userName,
 		isAuthenticated: state.isAuthenticated,
@@ -280,7 +277,7 @@ const mapStateToProps = (state) => {
 	};
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
 	return {
 		logout: () => {
 			dispatch({ type: actionTypes.LOG_OUT });

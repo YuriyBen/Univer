@@ -55,7 +55,7 @@ class AdminPage extends Component {
 					</thead>
 
 					<tbody>
-						{this.state.historyItems.map((historyItem, index) => (
+						{this.state.historyItems.reverse().map((historyItem, index) => (
 							<HistoryItem source={historyItem} key={index} />
 						))}
 					</tbody>
