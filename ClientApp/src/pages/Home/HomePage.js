@@ -19,11 +19,7 @@ class HomePage extends Component {
 		enableCalculate: false,
 		firstMatrix: [],
 		secondMatrix: [],
-		historyItems: [
-			{ id: "123", date: "12.11.2020", matrixSizes: "30x40", status: "done", result: "123" },
-			{ id: "234", date: "10.12.2020", matrixSizes: "12x45", status: "cancelled", result: "321" },
-			{ id: "345", date: "01.10.2020", matrixSizes: "32x4", status: "processing", result: "213" },
-		],
+		historyItems: [],
 	};
 
 	enabledC = () => {
@@ -83,7 +79,7 @@ class HomePage extends Component {
 			.post(
 				"https://localhost:44326/api/math-task",
 				{
-					userId: this.props.userId,
+					userId: Number(this.props.userId),
 					matrix1: this.state.firstMatrix,
 					matrix2: this.state.secondMatrix,
 				},
@@ -94,12 +90,37 @@ class HomePage extends Component {
 				}
 			)
 			.then(response => {
-				console.log(response);
+				this.getHistory();
 			})
 			.catch(error => {
 				console.log(error);
 			});
+
+		setTimeout(this.getHistory, 1000);
 	};
+
+	getHistory = () => {
+		const Cookies = new cookies();
+
+		axios
+			.get(`https://localhost:44326/api/account/history?userId=${this.props.userId}`, {
+				headers: {
+					Authorization: "Bearer " + Cookies.get("accessToken"),
+				},
+			})
+			.then(result => {
+				if (result.data.status === 0) {
+					this.setState({ historyItems: result.data.data });
+				}
+			})
+			.catch(error => {
+				console.error(error);
+			});
+	};
+
+	componentDidMount() {
+		this.getHistory();
+	}
 
 	render() {
 		return (
@@ -188,7 +209,7 @@ class HomePage extends Component {
 							}}
 						/>
 					</div>
-					<Matrix source={this.state.firstMatrix} />
+					{/* <Matrix source={this.state.firstMatrix} /> */}
 				</div>
 				<div className={styles.MatrixHolder}>
 					<div className={styles.InputHolder}>
@@ -209,7 +230,7 @@ class HomePage extends Component {
 						/>
 						<input placeholder="row" type="number" value={this.state.matrix1C} onChange={() => {}} />
 					</div>
-					<Matrix source={this.state.secondMatrix} />{" "}
+					{/* <Matrix source={this.state.secondMatrix} />{" "} */}
 				</div>
 				<h1>HISTORY</h1>
 				<table className={styles.History}>
