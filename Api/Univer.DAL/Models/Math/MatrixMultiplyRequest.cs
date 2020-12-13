@@ -14,5 +14,12 @@ namespace Univer.DAL.Models.Math
 
     }
 
+    public class MatrixMultiplyResponse
+    {
+        public long MatrixSum { get; set; }
+        public int[][] ResultMatrix { get; set; }
+
+    }
+
 
 }

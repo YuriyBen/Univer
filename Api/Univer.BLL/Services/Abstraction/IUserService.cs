@@ -13,6 +13,6 @@ namespace Univer.BLL.Services
         Task<object> Login(Login login);
         object RefreshToken(RefreshTokenRequest refreshTokenRequest);
         //(string AccessToken, string RefreshToken) GenerateJWT_Tokens(int userId);
-        object GetMyHistory(SimpleIdRequest simpleIdRequest);
+        object GetMyHistory(int userId);
     }
 }

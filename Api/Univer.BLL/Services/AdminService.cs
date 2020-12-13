@@ -39,7 +39,7 @@ namespace Univer.BLL.Services
                             Username = user.UserName,
                             MatrixSizes = history.MatrixSizes,
                             Date = history.Date.ToShortDateString(),
-                            Result = history.Result,
+                            Result = history.MatrixSum,
                             IsCanceled = history.IsCanceled,
                             IsCurrentlyExecuted = history.IsCurrentlyExecuted
                         });

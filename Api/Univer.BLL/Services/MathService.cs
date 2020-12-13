@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,7 +62,7 @@ namespace Univer.BLL.Services
 				string formattedMatrixSizes = this.FormatMatrixSize(rows_1, columns_1, rows_2, columns_2);
 				History history = await this.AddMathResultToDb(result: 0, userPublicDataId: userPublicDataId, formattedMatrixSize: formattedMatrixSizes, isBeingExecuted: true);
 
-				var matrix3 = new int[rows_1, columns_2];
+				var matrix3 = new int[rows_1,columns_2];
 
 				for (var i = 0; i < rows_1; i++)
 				{
@@ -84,13 +85,13 @@ namespace Univer.BLL.Services
 					}
 				}
 
-				long sum = 0;
+				long matrixSum = 0;
 
 				for (var i = 0; i < rows_1; i++)
 				{
 					for (var j = 0; j < columns_2; j++)
 					{
-						sum += matrix3[i, j];
+						matrixSum += matrix3[i, j];
 						if (cancellationToken.IsCancellationRequested)
 						{
 							await this.PreviousStateDueToCanceledRequest(history: history, cancellationToken: cancellationToken);
@@ -98,12 +99,12 @@ namespace Univer.BLL.Services
 
 					}
 				}
-
+				history.ResultMatrix = JsonConvert.SerializeObject(matrix3);
 				history.IsCurrentlyExecuted = false;
-				history.Result = sum;
+				history.MatrixSum = matrixSum;
 				await this.ModifyHistoryInDb(historyToModify: history);
 
-				return new ResponseBase<long> { Data = sum };
+				return new ResponseBase<MatrixMultiplyResponse> { Data = new MatrixMultiplyResponse { MatrixSum = matrixSum, ResultMatrix = Newtonsoft.Json.JsonConvert.DeserializeObject<int[][]>(history.ResultMatrix) } };
 
 			}
 			catch (Exception ex)
@@ -116,7 +117,7 @@ namespace Univer.BLL.Services
 
         private async Task<History> AddMathResultToDb(int result, int userPublicDataId, string formattedMatrixSize, bool isBeingExecuted = false)
         {
-			History history =  this._context.History.Add(new History { Date = DateTime.Now, UserPublicDataId = userPublicDataId, Result = result, MatrixSizes = formattedMatrixSize, IsCurrentlyExecuted = isBeingExecuted }).Entity;
+			History history =  this._context.History.Add(new History { Date = DateTime.Now, UserPublicDataId = userPublicDataId, MatrixSum = result, MatrixSizes = formattedMatrixSize, IsCurrentlyExecuted = isBeingExecuted }).Entity;
 
 			await this._context.SaveChangesAsync();
 			return history;

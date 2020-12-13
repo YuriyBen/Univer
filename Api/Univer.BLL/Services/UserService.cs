@@ -221,24 +221,24 @@ namespace Univer.BLL.Services
             return (AccessToken: accessToken, RefreshToken: refreshToken);
         }
 
-        public object GetMyHistory(SimpleIdRequest simpleIdRequest)
+        public object GetMyHistory(int userId)
         {
             try
             {
                 IEnumerable<HistoryDTO> myHistory = _context.UsersPublicData.Include(x => x.History)
-                        .Where(x => x.UserId == simpleIdRequest.Id)
+                        .Where(x => x.UserId == userId)
                         .SelectMany(x => x.History
                         .Select(history =>
                            new HistoryDTO
-                            {
-                                Id = history.Id,
-                                Date = history.Date.ToShortDateString(),
-                                MatrixSizes = history.MatrixSizes,
-                                Result = history.Result,
-                                IsCurrentlyExecuted = history.IsCurrentlyExecuted,
-                                IsCanceled = history.IsCanceled
-                            }));
-
+                           {
+                               Id = history.Id,
+                               Date = history.Date.ToShortDateString(),
+                               MatrixSizes = history.MatrixSizes,
+                               ResultMatrix = Newtonsoft.Json.JsonConvert.DeserializeObject<int[][]>(history.ResultMatrix),
+                               Result = history.MatrixSum,
+                               IsCurrentlyExecuted = history.IsCurrentlyExecuted,
+                               IsCanceled = history.IsCanceled
+                           }));
                 return new ResponseBase<IEnumerable<HistoryDTO>> { Data = myHistory };
             }
             catch (Exception ex)

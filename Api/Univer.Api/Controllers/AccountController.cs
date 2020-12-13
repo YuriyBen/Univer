@@ -58,10 +58,10 @@ namespace Univer.Api.Controllers
 
         [HttpGet("account/history")]
         [Authorize]
-        public ActionResult GetHistory([FromBody] SimpleIdRequest simpleIdRequest)
+        public ActionResult GetHistory([FromQuery] int userId)
         {
 
-            var result = _userService.GetMyHistory(simpleIdRequest: simpleIdRequest);
+            var result = _userService.GetMyHistory(userId: userId);
             return new JsonResult(result);
         }
 

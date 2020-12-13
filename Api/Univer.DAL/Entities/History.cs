@@ -9,7 +9,8 @@ namespace Univer.DAL.Entities
         public int Id { get; set; }
         public DateTime Date { get; set; }
         public string MatrixSizes { get; set; }
-        public long Result { get; set; }
+        public long MatrixSum { get; set; }
+        public string ResultMatrix { get; set; }
         public bool IsCurrentlyExecuted { get; set; } = false;
         public bool IsCanceled { get; set; } = false;
 
