@@ -104,7 +104,7 @@ class HomePage extends Component {
 				console.log(error);
 			});
 
-		setTimeout(this.getHistory, 1000);
+		setTimeout(this.getHistory, 500);
 	};
 
 	getHistory = () => {
@@ -262,7 +262,7 @@ class HomePage extends Component {
 					</thead>
 
 					<tbody>
-						{this.state.historyItems.map((historyItem, index) => (
+						{this.state.historyItems.reverse().map((historyItem, index) => (
 							<HistoryItem source={historyItem} key={index} />
 						))}
 					</tbody>

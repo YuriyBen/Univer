@@ -17,6 +17,17 @@
 	color: rgb(69, 69, 255);
 }
 
+.AdminPage th {
+	text-align: left;
+	border-bottom: 1px dashed white;
+}
+
+.AdminPage td {
+	border: 3px dashed white;
+	border-top: none;
+	padding: 10px;
+}
+
 .History {
 	width: 85%;
 	margin: 20px auto;

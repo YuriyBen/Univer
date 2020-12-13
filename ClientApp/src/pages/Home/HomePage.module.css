@@ -86,3 +86,9 @@ button:disabled {
 	text-align: left;
 	border-bottom: 1px dashed white;
 }
+
+.HomePage td {
+	border: 3px dashed white;
+	border-top: none;
+	padding: 10px;
+}
