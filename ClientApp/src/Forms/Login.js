@@ -7,7 +7,7 @@ import * as actionTypes from "../store/actions/actionTypes";
 class Login extends Component {
 	state = {
 		password: "",
-		login: "",
+		phone: "",
 		loading: false,
 		errorMessage: "",
 	};
@@ -15,7 +15,7 @@ class Login extends Component {
 	login = () => {
 		this.setState({ loading: true });
 		axios
-			.post("https://localhost:44326/api/login", { email: this.state.login, password: this.state.password })
+			.post("https://localhost:44326/api/login", { phone: this.state.phone, password: this.state.password })
 			.then(result => {
 				this.setState({ loading: false });
 				if (result.data.status === 0) {
@@ -37,10 +37,10 @@ class Login extends Component {
 				{this.state.loading ? <label>Loading...</label> : null}
 				<br />
 				<input
-					placeholder="E-mail"
-					type="text"
+					placeholder="Phone number"
+					type="phone"
 					onChange={event => {
-						this.setState({ login: event.target.value, errorMessage: "" });
+						this.setState({ phone: event.target.value, errorMessage: "" });
 					}}
 				/>
 				<br />

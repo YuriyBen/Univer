@@ -10,6 +10,24 @@ export default class Registration extends Component {
 		password: "",
 		loading: false,
 		errorMessage: "",
+
+		showSercretKeyInput: false,
+		secretKey: null,
+		id: "",
+		userName: "",
+	};
+
+	verify = () => {
+		this.setState({ loading: true });
+		axios
+			.post("https://localhost:44326/api/verification", {
+				userId: this.state.id,
+				phone: this.state.phone,
+				secretKey: Number(this.state.secretKey),
+			})
+			.then(result => {
+				this.props.toggle();
+			});
 	};
 
 	register = () => {
@@ -18,13 +36,17 @@ export default class Registration extends Component {
 			.post("https://localhost:44326/api/register", {
 				firstName: this.state.firstName,
 				lastName: this.state.lastName,
-				phone: this.state.email,
+				phone: this.state.phone,
 				password: this.state.password,
 			})
 			.then(result => {
 				this.setState({ loading: false });
 				if (result.data.status === 0) {
-					this.props.toggle();
+					this.setState({
+						id: result.data.data.id,
+						userName: result.data.data.userName,
+						showSercretKeyInput: true,
+					});
 				} else {
 					this.setState({ errorMessage: result.data.data });
 				}
@@ -80,6 +102,19 @@ export default class Registration extends Component {
 					}}
 				/>
 				<br />
+				{this.state.showSercretKeyInput ? (
+					<React.Fragment>
+						<input
+							placeholder="Secret code"
+							type="number"
+							onChange={event => {
+								this.setState({ secretKey: event.target.value });
+							}}
+						/>
+						<br />
+						<button onClick={this.verify}>VERIFY</button>
+					</React.Fragment>
+				) : null}
 				<label className={styles.errorMessage}>{this.state.errorMessage}</label>
 				<br />
 				<button disabled={this.isButtonDisabled()} onClick={this.register}>
