@@ -21,11 +21,11 @@ export const clearCookies = () => {
 
 const initAuthData = (state, action) => {
 	return updateObject(state, {
-		// isAuthenticated: Boolean(cookies.get("accessToken")),
-		isAuthenticated: true,
+		isAuthenticated: Boolean(cookies.get("accessToken")),
+		// isAuthenticated: true,
 		userId: cookies.get("userId"),
-		// userName: cookies.get("userName"),
-		userName: "AdminAdmin",
+		userName: cookies.get("userName"),
+		// userName: "AdminAdmin",
 		email: cookies.get("email"),
 	});
 };
