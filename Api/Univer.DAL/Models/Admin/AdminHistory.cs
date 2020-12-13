@@ -10,8 +10,7 @@ namespace Univer.DAL.Models.Admin
         public string Date { get; set; }
         public string MatrixSizes { get; set; }
         public long Result { get; set; }
-        public bool IsCurrentlyExecuted { get; set; }
-        public bool IsCanceled { get; set; }
+        public string Status { get; set; }
 
     }
 }

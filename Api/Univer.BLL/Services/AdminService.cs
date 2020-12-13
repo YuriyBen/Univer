@@ -40,8 +40,7 @@ namespace Univer.BLL.Services
                             MatrixSizes = history.MatrixSizes,
                             Date = history.Date.ToShortDateString(),
                             Result = history.MatrixSum,
-                            IsCanceled = history.IsCanceled,
-                            IsCurrentlyExecuted = history.IsCurrentlyExecuted
+                            Status = history.IsCurrentlyExecuted ? "In process" : (history.IsCanceled ? "Canceled" : "Completed")
                         });
                     }
                 }

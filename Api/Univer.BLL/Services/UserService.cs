@@ -234,10 +234,9 @@ namespace Univer.BLL.Services
                                Id = history.Id,
                                Date = history.Date.ToShortDateString(),
                                MatrixSizes = history.MatrixSizes,
-                               ResultMatrix = Newtonsoft.Json.JsonConvert.DeserializeObject<int[][]>(history.ResultMatrix),
+                               ResultMatrix = history.ResultMatrix == default ? default : Newtonsoft.Json.JsonConvert.DeserializeObject<int[][]>(history.ResultMatrix),
                                Result = history.MatrixSum,
-                               IsCurrentlyExecuted = history.IsCurrentlyExecuted,
-                               IsCanceled = history.IsCanceled
+                               Status = history.IsCurrentlyExecuted ? "In process" : (history.IsCanceled ? "Canceled" : "Completed")
                            }));
                 return new ResponseBase<IEnumerable<HistoryDTO>> { Data = myHistory };
             }
