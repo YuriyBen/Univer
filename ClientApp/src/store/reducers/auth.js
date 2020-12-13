@@ -21,18 +21,20 @@ export const clearCookies = () => {
 
 const initAuthData = (state, action) => {
 	return updateObject(state, {
-		isAuthenticated: Boolean(cookies.get("accessToken")),
-		// isAuthenticated: true,
+		// isAuthenticated: Boolean(cookies.get("accessToken")),
+		isAuthenticated: true,
 		userId: cookies.get("userId"),
-		userName: cookies.get("userName"),
-		// userName: "Admin Admin",
+		// userName: cookies.get("userName"),
+		userName: "AdminAdmin",
 		email: cookies.get("email"),
 	});
 };
 
 const setAuthData = (state, action) => {
 	clearCookies();
-	const expires = new Date(new Date().getTime() + 10 * 365 * 24 * 60 * 60 * 1000);
+	const expires = new Date(
+		new Date().getTime() + 10 * 365 * 24 * 60 * 60 * 1000
+	);
 
 	cookies.set("accessToken", action.authData.accessToken, {
 		expires,
