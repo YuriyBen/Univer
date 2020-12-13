@@ -4,42 +4,48 @@ import { connect } from "react-redux";
 import * as actionTypes from "../../store/actions/actionTypes";
 import axios from "axios";
 import HistoryItem from "../../components/HistoryItem/HistoryItem";
+import Cookies from "universal-cookie";
 
 class AdminPage extends Component {
 	state = {
-		information: null,
+		historyItems: [],
 	};
 
 	componentDidMount() {
-		this.interval = setInterval(
-			() => this.setState({ time: Date.now() }),
-			1000
-		);
+		this.getHistory();
 	}
 
-	componentWillUnmount() {
-		clearInterval(this.interval);
+	getHistory = () => {
+		const cookies = new Cookies();
 
 		axios
-			.get("/blablabla")
-			.then((response) => {
-				this.setState({ information: response.data });
+			.get("/api/admin-history", {
+				headers: {
+					Authorization: "Bearer " + cookies.get("accessToken"),
+				},
 			})
-			.catch((error) => {
+			.then(response => {
+				this.setState({ historyItems: response.data.data });
+			})
+			.catch(error => {
 				console.error(error);
 			});
-	}
+	};
 
 	render() {
 		return (
 			<div className={styles.AdminPage}>
-				<div>YOU ARE ON ADMIN PAGE.</div>
-				<button onClick={this.props.logout}>LOG OUT</button>
-				<h1>HISTORY</h1>
+				<div className={styles.PageHeader}>
+					<div>YOU ARE ON ADMIN PAGE.</div>
+					<h5 onClick={this.props.logout}>CLICK HERE TO LOG OUT</h5>
+				</div>
+
+				<h1>REQUESTS IN PROCESS</h1>
+				<button onClick={this.getHistory}>REFRESH</button>
 				<table className={styles.History}>
 					<thead>
 						<tr>
-							<th>UZER NAME</th>
+							<th>USER NAME</th>
 							<th>ID</th>
 							<th>DATE</th>
 							<th>SIZE</th>
@@ -57,7 +63,7 @@ class AdminPage extends Component {
 	}
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
 	return {
 		userName: state.userName,
 		isAuthenticated: state.isAuthenticated,
@@ -65,7 +71,7 @@ const mapStateToProps = (state) => {
 	};
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
 	return {
 		logout: () => {
 			dispatch({ type: actionTypes.LOG_OUT });

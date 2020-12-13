@@ -81,7 +81,7 @@ class HomePage extends Component {
 		const Cookies = new cookies();
 		axios
 			.post(
-				"/",
+				"https://localhost:44326/api/math-task",
 				{
 					userId: this.props.userId,
 					matrix1: this.state.firstMatrix,
@@ -89,7 +89,7 @@ class HomePage extends Component {
 				},
 				{
 					headers: {
-						Authorization: Cookies.get("accessToken"),
+						Authorization: "Bearer " + Cookies.get("accessToken"),
 					},
 				}
 			)
@@ -236,7 +236,7 @@ class HomePage extends Component {
 
 const mapStateToProps = state => {
 	return {
-		userName: state.userName.split(" ")[0],
+		userName: state.userName,
 		isAuthenticated: state.isAuthenticated,
 		userId: state.userId,
 	};

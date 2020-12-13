@@ -5,4 +5,24 @@
 	padding: 10px;
 	box-sizing: border-box;
 	overflow-y: auto;
+	text-align: center;
+}
+
+.AdminPage h5 {
+	text-decoration: underline;
+}
+
+.AdminPage h5:hover {
+	cursor: pointer;
+	color: rgb(69, 69, 255);
+}
+
+.History {
+	width: 85%;
+	margin: 20px auto;
+}
+
+.History th {
+	text-align: left;
+	border-bottom: 1px dashed white;
 }
