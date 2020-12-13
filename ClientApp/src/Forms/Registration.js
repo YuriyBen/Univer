@@ -6,7 +6,7 @@ export default class Registration extends Component {
 	state = {
 		firstName: "",
 		lastName: "",
-		email: "",
+		phone: "",
 		password: "",
 		loading: false,
 		errorMessage: "",
@@ -18,7 +18,7 @@ export default class Registration extends Component {
 			.post("https://localhost:44326/api/register", {
 				firstName: this.state.firstName,
 				lastName: this.state.lastName,
-				email: this.state.email,
+				phone: this.state.email,
 				password: this.state.password,
 			})
 			.then(result => {
@@ -64,10 +64,11 @@ export default class Registration extends Component {
 				/>
 				<br />
 				<input
-					placeholder="E-mail"
-					type="text"
+					placeholder="Phone number"
+					defaultValue="+380"
+					type="phone"
 					onChange={event => {
-						this.setState({ email: event.target.value });
+						this.setState({ phone: event.target.value });
 					}}
 				/>
 				<br />
