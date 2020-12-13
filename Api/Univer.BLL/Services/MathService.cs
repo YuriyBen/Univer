@@ -37,7 +37,6 @@ namespace Univer.BLL.Services
 		}
 		public async Task<object> MatrixMultiply(MatrixMultiplyRequest matrixMultiplyRequest, CancellationToken cancellationToken)
         {
-
 			int rows_1 = matrixMultiplyRequest.Matrix1.GetUpperBound(0) + 1;
 			int columns_1 = matrixMultiplyRequest.Matrix1[0].Length;
 			int rows_2 = matrixMultiplyRequest.Matrix2.GetUpperBound(0) + 1;
@@ -104,7 +103,7 @@ namespace Univer.BLL.Services
 				history.Result = sum;
 				await this.ModifyHistoryInDb(historyToModify: history);
 
-				return new ResponseBase<string> { Data = $"Result is equal to {sum}" };
+				return new ResponseBase<long> { Data = sum };
 
 			}
 			catch (Exception ex)
