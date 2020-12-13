@@ -35,23 +35,13 @@ namespace Univer.BLL.Services
 			cancellationToken.ThrowIfCancellationRequested();
 
 		}
-		private int[,] ConvertJsonToArray(string array)
-        {
-			return Newtonsoft.Json.JsonConvert.DeserializeObject<int[,]>(array);
-		}
 		public async Task<object> MatrixMultiply(MatrixMultiplyRequest matrixMultiplyRequest, CancellationToken cancellationToken)
         {
-			MatrixMultiplyDTO matrixMultiplyDTO = new MatrixMultiplyDTO
-			{
-				UserId = matrixMultiplyRequest.UserId,
-				Matrix1 = this.ConvertJsonToArray(matrixMultiplyRequest.Matrix1),
-				Matrix2 = this.ConvertJsonToArray(matrixMultiplyRequest.Matrix2)
-			};
 
-			int rows_1 = matrixMultiplyDTO.Matrix1.GetUpperBound(0) + 1;
-			int columns_1 = matrixMultiplyDTO.Matrix1.GetUpperBound(1) + 1;
-			int rows_2 = matrixMultiplyDTO.Matrix2.GetUpperBound(0) + 1;
-			int columns_2 = matrixMultiplyDTO.Matrix2.GetUpperBound(1) + 1;
+			int rows_1 = matrixMultiplyRequest.Matrix1.GetUpperBound(0) + 1;
+			int columns_1 = matrixMultiplyRequest.Matrix1[0].Length;
+			int rows_2 = matrixMultiplyRequest.Matrix2.GetUpperBound(0) + 1;
+			int columns_2 = matrixMultiplyRequest.Matrix2[0].Length;
 
 			if (columns_1 != rows_2)
 			{
@@ -60,7 +50,7 @@ namespace Univer.BLL.Services
 
 			try
 			{
-				int userPublicDataId = _context.UsersPublicData.FirstOrDefault(u => u.UserId == matrixMultiplyDTO.UserId).Id;
+				int userPublicDataId = _context.UsersPublicData.FirstOrDefault(u => u.UserId == matrixMultiplyRequest.UserId).Id;
 
 				int amountOfSimultaneouslyExecutedTasks = await this._context.History.Where(item => item.UserPublicDataId == userPublicDataId && item.IsCurrentlyExecuted).CountAsync();
 
@@ -86,7 +76,7 @@ namespace Univer.BLL.Services
 
 						for (var k = 0; k < columns_1; k++)
 						{
-							matrix3[i, j] += matrixMultiplyDTO.Matrix1[i, k] * matrixMultiplyDTO.Matrix2[k, j];
+							matrix3[i, j] += matrixMultiplyRequest.Matrix1[i][k] * matrixMultiplyRequest.Matrix2[k][j];
 							if (cancellationToken.IsCancellationRequested)
 							{
 								await this.PreviousStateDueToCanceledRequest(history: history, cancellationToken: cancellationToken);
