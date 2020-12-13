@@ -234,7 +234,6 @@ namespace Univer.BLL.Services
                                Id = history.Id,
                                Date = history.Date.ToShortDateString(),
                                MatrixSizes = history.MatrixSizes,
-                               ResultMatrix = history.ResultMatrix == default ? default : Newtonsoft.Json.JsonConvert.DeserializeObject<int[][]>(history.ResultMatrix),
                                Result = history.MatrixSum,
                                Status = history.IsCurrentlyExecuted ? "In process" : (history.IsCanceled ? "Canceled" : "Completed")
                            }));

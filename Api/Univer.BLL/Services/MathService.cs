@@ -107,12 +107,11 @@ namespace Univer.BLL.Services
 
 					}
 				}
-				history.ResultMatrix = JsonConvert.SerializeObject(matrix3);
 				history.IsCurrentlyExecuted = false;
 				history.MatrixSum = matrixSum;
 				await this.ModifyHistoryInDb(historyToModify: history);
 
-				return new ResponseBase<MatrixMultiplyResponse> { Data = new MatrixMultiplyResponse { MatrixSum = matrixSum, ResultMatrix = Newtonsoft.Json.JsonConvert.DeserializeObject<int[][]>(history.ResultMatrix) } };
+				return new ResponseBase<MatrixMultiplyResponse> { Data = new MatrixMultiplyResponse { MatrixSum = matrixSum, ResultMatrix = Newtonsoft.Json.JsonConvert.DeserializeObject<int[][]>(JsonConvert.SerializeObject(matrix3)) } };
 
 			}
 			catch (Exception ex)

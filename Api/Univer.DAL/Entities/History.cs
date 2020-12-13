@@ -10,7 +10,6 @@ namespace Univer.DAL.Entities
         public DateTime Date { get; set; }
         public string MatrixSizes { get; set; }
         public long MatrixSum { get; set; }
-        public string ResultMatrix { get; set; }
         public bool IsCurrentlyExecuted { get; set; } = false;
         public bool IsCanceled { get; set; } = false;
 
