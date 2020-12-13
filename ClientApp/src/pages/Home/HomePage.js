@@ -20,6 +20,12 @@ class HomePage extends Component {
 		firstMatrix: [],
 		secondMatrix: [],
 		historyItems: [],
+		cancellationTokenSource: null,
+	};
+
+	cancellRequests = () => {
+		this.state.cancellationTokenSource.cancel();
+		this.getHistory();
 	};
 
 	enabledC = () => {
@@ -75,6 +81,7 @@ class HomePage extends Component {
 
 	claculate = () => {
 		const Cookies = new cookies();
+		const cancellationTokenSource = axios.CancelToken.source();
 		axios
 			.post(
 				"https://localhost:44326/api/math-task",
@@ -87,6 +94,7 @@ class HomePage extends Component {
 					headers: {
 						Authorization: "Bearer " + Cookies.get("accessToken"),
 					},
+					cancelToken: cancellationTokenSource.token,
 				}
 			)
 			.then(response => {
@@ -96,8 +104,13 @@ class HomePage extends Component {
 				console.log(error);
 			});
 
+		this.setState({ cancellationTokenSource });
 		setTimeout(this.getHistory, 1000);
 	};
+
+	// componentDidUpdate() {
+	// 	this.setState({ cancellationTokenSource: axios.CancelToken.source() });
+	// }
 
 	getHistory = () => {
 		const Cookies = new cookies();
@@ -209,7 +222,7 @@ class HomePage extends Component {
 							}}
 						/>
 					</div>
-					{/* <Matrix source={this.state.firstMatrix} /> */}
+					<Matrix source={this.state.firstMatrix} />
 				</div>
 				<div className={styles.MatrixHolder}>
 					<div className={styles.InputHolder}>
@@ -230,9 +243,10 @@ class HomePage extends Component {
 						/>
 						<input placeholder="row" type="number" value={this.state.matrix1C} onChange={() => {}} />
 					</div>
-					{/* <Matrix source={this.state.secondMatrix} />{" "} */}
+					<Matrix source={this.state.secondMatrix} />{" "}
 				</div>
 				<h1>HISTORY</h1>
+				<button onClick={this.cancellRequests}>CANCELL THE CALCULATION PROCESS</button>
 				<table className={styles.History}>
 					<thead>
 						<tr>
@@ -245,7 +259,7 @@ class HomePage extends Component {
 					</thead>
 
 					<tbody>
-						{this.state.historyItems.map((historyItem, index) => (
+						{this.state.historyItems.reverse().map((historyItem, index) => (
 							<HistoryItem source={historyItem} key={index} />
 						))}
 					</tbody>

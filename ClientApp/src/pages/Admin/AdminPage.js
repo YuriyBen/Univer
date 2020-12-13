@@ -19,12 +19,13 @@ class AdminPage extends Component {
 		const cookies = new Cookies();
 
 		axios
-			.get("/api/admin-history", {
+			.get("https://localhost:44326/api/admin", {
 				headers: {
 					Authorization: "Bearer " + cookies.get("accessToken"),
 				},
 			})
 			.then(response => {
+				console.log(response.data.data);
 				this.setState({ historyItems: response.data.data });
 			})
 			.catch(error => {
@@ -45,15 +46,16 @@ class AdminPage extends Component {
 				<table className={styles.History}>
 					<thead>
 						<tr>
-							<th>USER NAME</th>
+							<th>USER</th>
 							<th>ID</th>
 							<th>DATE</th>
 							<th>SIZE</th>
+							<th>RESULT</th>
 						</tr>
 					</thead>
 
 					<tbody>
-						{this.state.historyItems.map((historyItem, index) => (
+						{this.state.historyItems.reverse().map((historyItem, index) => (
 							<HistoryItem source={historyItem} key={index} />
 						))}
 					</tbody>

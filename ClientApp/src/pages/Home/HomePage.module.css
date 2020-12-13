@@ -29,7 +29,6 @@
 button {
 	background-color: #0822c7;
 	color: rgba(255, 255, 255, 0.658);
-	width: 150px;
 	height: 40px;
 }
 
@@ -85,4 +84,10 @@ button:disabled {
 .HomePage th {
 	text-align: left;
 	border-bottom: 1px dashed white;
+}
+
+.HomePage td {
+	border: 3px dashed white;
+	border-top: none;
+	padding: 10px;
 }

@@ -5,20 +5,22 @@ export default function Matrix(props) {
 	return (
 		<div className={styles.Matrix}>
 			{props.source
-				? props.source.map((row, rowIndex) => {
+				? props.source.slice(0, 31).map((row, rowIndex) => {
 						return (
 							<div key={rowIndex} className={styles.Row}>
-								{row.map((element, elementIndex) => {
+								{row.slice(0, 31).map((element, elementIndex) => {
 									return (
 										<div key={elementIndex} className={styles.Element}>
 											{element}
 										</div>
 									);
 								})}
+								{row.length > 30 ? <div>...</div> : null}
 							</div>
 						);
 				  })
 				: "empty"}
+			{props.source.length > 30 ? <div>...</div> : null}
 		</div>
 	);
 }
