@@ -95,6 +95,17 @@ class HomePage extends Component {
 						Authorization: "Bearer " + Cookies.get("accessToken"),
 					},
 					cancelToken: cancellationTokenSource.token,
+					onUploadProgress: progressEvent => {
+						// let percentCompleted = Math.floor((progressEvent.loaded * 100) / progressEvent.total);
+						// console.log("Upload: ", percentCompleted);
+						console.log("1", progressEvent.total);
+					},
+					onDownloadProgress: progressEvent => {
+						// const responseSize = this.state.matrix1C * this.state.matr;
+						// let percentCompleted = Math.floor((progressEvent.loaded * 100) / responseSize);
+						// console.log("Download: ", percentCompleted);
+						console.log("2", progressEvent.loaded);
+					},
 				}
 			)
 			.then(response => {
@@ -250,7 +261,6 @@ class HomePage extends Component {
 				<table className={styles.History}>
 					<thead>
 						<tr>
-							<th>ID</th>
 							<th>DATE</th>
 							<th>SIZE</th>
 							<th>STATUS</th>

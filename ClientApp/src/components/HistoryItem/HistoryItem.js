@@ -9,11 +9,6 @@ export default function HistoryItem(props) {
 					{props.source.username}
 				</td>
 			) : null}
-			{props.source.id ? (
-				<td headers="id" className={styles.HistoryItemProp}>
-					{props.source.id}
-				</td>
-			) : null}
 			<td headers="date" className={styles.HistoryItemProp}>
 				{props.source.date}
 			</td>
