@@ -44,6 +44,11 @@ namespace Univer.BLL.Services
 			int rows_2 = matrixMultiplyRequest.Matrix2.GetUpperBound(0) + 1;
 			int columns_2 = matrixMultiplyRequest.Matrix2[0].Length;
 
+			if(rows_1 > 2500 || columns_1 > 2500 || rows_2 > 2500 || columns_2 > 2500)
+            {
+				return new ResponseBase<string> { Status = ResponeStatusCodes.BadRequest, Data = ResponseMessages.MatrixSizesEror };
+			}
+
 			if (columns_1 != rows_2)
 			{
 				return new ResponseBase<string> { Status = ResponeStatusCodes.BadRequest, Data = ResponseMessages.MatrixSizesEror };
